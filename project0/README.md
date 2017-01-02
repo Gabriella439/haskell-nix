@@ -425,6 +425,5 @@ $ nix-shell
 
 # Conclusion
 
-That concludes Nix workflow basics for Haskell development.  Visit the
-`project1/` subdirectory of this repository to learn about dependency
-management.
+That concludes Nix workflow basics for Haskell development.  The
+[next section](../project1/README.md) covers dependency management.
