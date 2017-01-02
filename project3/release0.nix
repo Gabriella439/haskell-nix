@@ -1,14 +1,12 @@
-# Note: This should fail to build
 let
   config = {
     packageOverrides = pkgs: rec {
       haskellPackages = pkgs.haskellPackages.override {
         overrides = haskellPackagesNew: haskellPackagesOld: rec {
-          project1 =
-            haskellPackagesNew.callPackage ./default.nix { };
-
-          turtle =
-            haskellPackagesNew.callPackage ./turtle.nix { };
+          project3 =
+            haskellPackagesNew.callPackage ./default.nix {
+              tar = pkgs.libtar;
+            };
         };
       };
     };
@@ -17,5 +15,5 @@ let
   pkgs = import <nixpkgs> { inherit config; };
 
 in
-  { project1 = pkgs.haskellPackages.project1;
+  { project3 = pkgs.haskellPackages.project3;
   }

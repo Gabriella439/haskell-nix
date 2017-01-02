@@ -2,7 +2,7 @@ let
   config = {
     packageOverrides = pkgs: rec {
       haskellPackages = pkgs.haskellPackages.override {
-        overrides = haskellPackagesNew: haskellPackgesOld: rec {
+        overrides = haskellPackagesNew: haskellPackagesOld: rec {
           optparse-applicative =
             haskellPackagesNew.callPackage ./optparse-applicative-2.nix { };
 

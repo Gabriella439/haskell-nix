@@ -138,9 +138,11 @@ order to follow the tutorial:
 * [Project 0 - Nix basics - README][proj0]
 * [Project 1 - Dependency management - README][proj1]
 * [Project 2 - Non-Haskell dependencies - README][proj2]
+* [Project 3 - Customizing Haskell projects - README][proj2]
 
 [awake]: http://www.awakenetworks.com/
 [nixpkgs-haskell]: https://nixos.org/nixpkgs/manual/#users-guide-to-the-haskell-infrastructure
 [proj0]: ./project0/README.md
 [proj1]: ./project1/README.md
 [proj2]: ./project2/README.md
+[proj3]: ./project3/README.md

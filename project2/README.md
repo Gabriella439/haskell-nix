@@ -103,7 +103,7 @@ let
   config = {
     packageOverrides = pkgs: rec {
       haskellPackages = pkgs.haskellPackages.override {
-        overrides = haskellPackagesNew: haskellPackgesOld: rec {
+        overrides = haskellPackagesNew: haskellPackagesOld: rec {
           project2 =
             haskellPackagesNew.callPackage ./default.nix {
               tar = pkgs.libtar;
@@ -169,5 +169,5 @@ Successfully closed example.tar
 
 # Conclusion
 
-This concludes managing native dependencies using Nix.  This is the last section
-of the tutorial.
+This concludes managing native dependencies using Nix.  The next section covers
+[customizing Haskell projects](../project3/README.md).
