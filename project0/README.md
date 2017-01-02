@@ -179,6 +179,10 @@ if you have non-Haskell dependencies then this won't work.  When in doubt, just
 get used to development inside of a Nix shell since that habit will translate
 well to non-Haskell projects managed by Nix.
 
+**NOTE:** I recommend using `cabal` to build the root project during Haskell
+package development, but subsequent examples will still use `nix-build` to
+keep the examples short.
+
 # Nix derivations
 
 The `release0.nix` file specifies how to build the project using Nix:
