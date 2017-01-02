@@ -1,0 +1,14 @@
+name: project2
+version: 1.0.0
+license: BSD3
+license-file: LICENSE
+cabal-version: >= 1.18
+build-type: Simple
+extra-source-files: cbits
+
+executable project2
+    build-depends: base < 5
+    default-language: Haskell2010
+    c-sources: cbits/check.c
+    extra-libraries: tar
+    main-is: Main.hs

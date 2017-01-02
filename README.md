@@ -131,14 +131,16 @@ Finally, run `cabal update` if you haven't done so already
 
 # Organization
 
-This tutorial is split into two tutorial projects in the `project0/` and
+This tutorial is split into several tutorial projects in the `project0/` and
 `project1/` subdirectories.  Read the `README.md` file in each subdirectory in
 order to follow the tutorial:
 
 * [Project 0 - Nix basics - README][proj0]
 * [Project 1 - Dependency management - README][proj1]
+* [Project 2 - Non-Haskell dependencies - README][proj2]
 
 [awake]: http://www.awakenetworks.com/
 [nixpkgs-haskell]: https://nixos.org/nixpkgs/manual/#users-guide-to-the-haskell-infrastructure
 [proj0]: ./project0/README.md
 [proj1]: ./project1/README.md
+[proj2]: ./project2/README.md
