@@ -424,7 +424,7 @@ The reason this works is due to a combination of two tricks:
   `bin/` directory with the executable and nothing else
 
 The combination of these two things significantly slims down the dependency
-tree.  We can very this using the handy `nix-store --query --requisites`
+tree.  We can verify this using the handy `nix-store --query --requisites`
 command which lets you view all transitive dependencies for a given Nix package.
 
 Before the closure minimization, we get this dependency tree:
@@ -475,7 +475,7 @@ $ nix-store --query --requisites result
 /nix/store/1nc7kaw3lp574hhi2bfxdb490q5kp2m8-project3-1.0.0
 ```
 
-After closure minimization we get this dependency graph:
+After closure minimization we get this dependency tree:
 
 ```bash
 $ nix-build -A project3-minimal release2.nix 
