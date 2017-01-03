@@ -32,8 +32,8 @@ expect the hashed paths in the above example output to necessarily match the
 ones you get (See below for more details about why they might differ).
 
 The `project0.cabal` file only specifies a single dependency of `base < 5` and
-in the above output Nix picks `base-4.9.0.0` to satisfy that dependency.  Nix
-then builds the project and stores build output in
+Nix picks `base-4.9.0.0` to satisfy that dependency.  Nix then builds the
+project, stores the build output in
 `/nix/store/x28vx2rfnffl1clmxn5054bxwqyln2j0-project0-1.0.0` and creates a
 symlink in the current directory named `result` pointing to that directory in
 the `/nix/store`:
