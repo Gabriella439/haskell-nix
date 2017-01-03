@@ -427,6 +427,11 @@ $ nix-shell
 
 ... and that will automatically use the contents of `shell.nix`
 
+Note that `cabal2nix` provides a `--shell` option to generate a `shell.nix`
+file suitable for the current project.  However, this does not play nice with
+advanced dependency management (covered in the next section) so I do not
+recommend this approach in general.
+
 # Conclusion
 
 That concludes Nix workflow basics for Haskell development.  The
