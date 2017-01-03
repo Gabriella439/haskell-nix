@@ -495,7 +495,7 @@ build will automatically pull in any changes you make to your source checkout of
 # Conclusion
 
 This concludes basic dependency management in Nix.  The
-[next section][../project2/README] covers using Nix to manage non-Haskell
+[next section](../project2/README) covers using Nix to manage non-Haskell
 dependencies.
 
 [hackage-packages]: https://raw.githubusercontent.com/NixOS/nixpkgs/master/pkgs/development/haskell-modules/hackage-packages.nix
