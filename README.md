@@ -76,9 +76,9 @@ The main disadvantage of using Nix are:
 *   Verbosity
 
     Nix derivations for Haskell projects are significantly more complex than
-    their corresponding `stack.yaml` files.  The `release.nix` file in this
-    repository is the Nix analog of a `stack.yaml` file and you can see for
-    yourself the increase in complexity.
+    their corresponding `stack.yaml` files.  The `release.nix` files in this
+    repository are the Nix analog of a `stack.yaml` file and you can see for
+    yourself the increase in complexity as the examples progress in difficulty.
 
 *   Poor error messages
 
