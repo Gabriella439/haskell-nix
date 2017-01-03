@@ -111,7 +111,7 @@ $ nix-build release0.nix
 ```
 
 This time we get a cache hit and reuse the first build since our directory is
-now bit-for-bit identical as when we first ran `nix-build`.
+now bit-for-bit identical to when we first ran `nix-build`.
 
 These wasteful rebuilds are one one reason that I don't recommend using
 `nix-build` to build the root Haskell project.  Instead, the next section
@@ -155,7 +155,7 @@ You can exit from the Nix shell using the `exit` command or typing `Ctrl-D`.
 
 This Nix shell provides all necessary dependencies for your project and the
 Haskell toolchain *except for `cabal`*.  For example, inside the Nix shell you
-will see that you are using a `ghc` provided by Nix:, regardless of whether or
+will see that you are using a `ghc` provided by Nix, regardless of whether or
 not you have a global `ghc` installed:
 
 ```haskell
@@ -167,7 +167,7 @@ The `cabal configure` step automatically picks up the `ghc` tool-chain and
 package database provisioned by Nix and uses them for all subsequent `cabal`
 commands.
 
-The `nixpkgs` manual notes that if you only have non-Haskell dependencies you
+The `nixpkgs` manual notes that if you only have Haskell dependencies you
 can also just run the following command once:
 
 ```
@@ -276,7 +276,6 @@ in
 ... where `nixpkgs.json` was generated using the `nix-prefetch-git` tool:
 
 ```haskell
-$ nix-env -i nix-prefetch-git  # Install `nix-prefetch-git`
 $ nix-prefetch-git https://github.com/NixOS/nixpkgs.git 2c288548b93b657365c27a0132a43ba0080870cc > nixpkgs.json
 $ cat nixpkgs.json
 {
