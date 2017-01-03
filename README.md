@@ -138,7 +138,7 @@ order to follow the tutorial:
 * [Project 0 - Nix basics][proj0]
 * [Project 1 - Dependency management][proj1]
 * [Project 2 - Non-Haskell dependencies][proj2]
-* [Project 3 - Customizing Haskell projects ][proj2]
+* [Project 3 - Customizing Haskell projects ][proj3]
 
 [awake]: http://www.awakenetworks.com/
 [nixpkgs-haskell]: https://nixos.org/nixpkgs/manual/#users-guide-to-the-haskell-infrastructure
