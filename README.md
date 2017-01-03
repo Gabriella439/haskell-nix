@@ -131,8 +131,8 @@ Finally, run `cabal update` if you haven't done so already
 
 # Organization
 
-This tutorial is split into several tutorial projects in the `project0/` and
-`project1/` subdirectories.  Read the `README.md` file in each subdirectory in
+This tutorial is split into several tutorial projects in the `project*/`
+subdirectories.  Read the `README.md` file in each subdirectory in
 order to follow the tutorial:
 
 * [Project 0 - Nix basics][proj0]
