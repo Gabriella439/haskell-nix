@@ -130,7 +130,7 @@ in
 In fact, our `release.nix` file goes a step further and includes two attributes
 instead of one:
 
-* the `project2` attribute builds our test project
+* the `project2` attribute builds our project
 * the `test` attribute runs a simple test to verify that the program works
 
 If we only care about building the project, then we would just run:
