@@ -320,6 +320,194 @@ Test suite logged to: dist/test/project3-1.0.0-test.log
 /nix/store/2z661k6rnwyiimympn1anmghdybi7izc-project3-1.0.0
 ```
 
+# Minimizing the closure
+
+In Nix, a package "closure" is the set of all transitive dependencies for that
+package.  Haskell packages built using Nix have a very large closure because
+they all depend on `ghc`, which is a very large package.
+
+For example, `release2.nix` contains an example of building a `docker` container
+for the `project3` executable before and after closure minimization:
+
+```nix
+
+let
+  config = {
+    packageOverrides = pkgs: rec {
+      project3-minimal = pkgs.stdenv.mkDerivation {
+        name = "project3-minimal";
+        buildCommand = ''
+          mkdir -p $out/bin
+          cp ${haskellPackages.project3}/bin/project3 $out/bin/project3
+        '';
+      };
+
+      docker-container-large = pkgs.dockerTools.buildImage {
+        name = "project3-container";
+        config.Cmd = [ "${haskellPackages.project3}/bin/project3" ];
+      };
+
+      docker-container-small = pkgs.dockerTools.buildImage {
+        name = "project3-container";
+        config.Cmd = [ "${project3-minimal}/bin/project3" ];
+      };
+
+      haskellPackages = pkgs.haskellPackages.override {
+        overrides = haskellPackagesNew: haskellPackgesOld: rec {
+          project3 =
+            pkgs.haskell.lib.overrideCabal
+              ( haskellPackagesNew.callPackage ./default.nix {
+                  tar = pkgs.libtar;
+                }
+              )
+              ( oldDerivation: {
+                  testToolDepends = [ pkgs.libarchive ];
+                  enableSharedExecutables = false;
+                }
+              );
+        };
+      };
+    };
+  };
+
+  pkgs = import <nixpkgs> { inherit config; };
+
+in
+  { project3 = pkgs.haskellPackages.project3;
+
+    project3-minimal = pkgs.project3-minimal;
+
+    docker-container-small = pkgs.docker-container-small;
+
+    docker-container-large = pkgs.docker-container-large;
+  }
+```
+
+If you build the `docker-container-large` attribute you will get a container
+that contains the entire closure of the `project03` project, including a
+complete `ghc` installation.  This is because `project03` is dynamically linked
+and depends on several dynamic libraries that are packaged with `ghc`.  The
+final container is over 250 MB compressed and 1.5 GB uncompressed.
+
+```bash
+$ nix-build -A docker-container-large release2.nix 
+...
+building path(s) ‘/nix/store/ml441hr1l5gw9piq8ysnjdaazjxapsci-project3-container.tar.gz’
+Adding layer
+Adding meta
+Cooking the image
+/nix/store/ml441hr1l5gw9piq8ysnjdaazjxapsci-project3-container.tar.gz
+$ du -hs $(readlink result)
+251M	/nix/store/ml441hr1l5gw9piq8ysnjdaazjxapsci-project3-container.tar.gz
+```
+
+If you build the `docker-container-small` attribute you will get a much
+smaller container that is only 11 MB compressed and 27 MB uncompressed:
+
+```bash
+$ nix-build -A docker-container-small release2.nix 
+...
+building path(s) ‘/nix/store/3mkrcqjnqv5vwid4qcaf3p1i70y87096-project3-container.tar.gz’
+Adding layer
+Adding meta
+Cooking the image
+/nix/store/3mkrcqjnqv5vwid4qcaf3p1i70y87096-project3-container.tar.gz
+$ du -hs $(readlink result)
+11M	/nix/store/3mkrcqjnqv5vwid4qcaf3p1i70y87096-project3-container.tar.gz
+```
+
+The reason this works is due to a combination of two tricks:
+
+* building statically linked executables for `project3` using
+  `enableSharedExecutables = false`
+* creating a separate package called `project3-minimal` that contains just the
+  `bin/` directory with the executable and nothing else
+
+The combination of these two things significantly slims down the dependency
+tree.  We can very this using the handy `nix-store --query --requisites`
+command which lets you view all transitive dependencies for a given Nix package.
+
+Before the closure minimization, we get this dependency tree:
+
+```bash
+$ nix-build -A project3 release2.nix these derivations will be built:
+...
+/nix/store/1nc7kaw3lp574hhi2bfxdb490q5kp2m8-project3-1.0.0
+
+$ nix-store --query --requisites result
+/nix/store/jm1n87rp8vr90j9ahcrfzr57nc2r8vgf-glibc-2.24
+/nix/store/6sp63j6m6vyspqm2d7zw15ipiym70kzc-attr-2.4.47
+/nix/store/03a2gwqj26hidgqsczpvk0g65p5fbhrs-attr-2.4.47-bin
+/nix/store/28wl3f34vfjpw0y5809bgr6382wqdscf-bash-4.3-p48
+/nix/store/24ln24075d8i5nq1sg558y667pyijx65-ghc-8.0.1-doc
+/nix/store/1rhcwhq2f8kkq01wrrr4w210n31iyq10-lzo-2.09
+/nix/store/81n6pgrx7lq5f7cjajv82wa422ccvbv4-openssl-1.0.2j
+/nix/store/8jwqlpyxp5c2rl5g7yspdfbh58dsciwx-xz-5.2.2
+/nix/store/ci7bn61pfds1y1ijkf3c85il0jdp87ar-acl-2.2.52
+/nix/store/isl3g7jbrl9a1kdljiyzvjjsqnmn060r-bzip2-1.0.6.0.1
+/nix/store/wz7l2zqdsa78jxnzkigv5gy2c7hxnbxh-zlib-1.2.8
+/nix/store/mh7n2d60dy0bj5qhhgwhn55skbsqcnsz-libxml2-2.9.4
+/nix/store/7crpicyhj61dkqa402f6m3fmb8iy23bn-libarchive-3.2.2-lib
+/nix/store/p4ks7972lzhqq9rcyc837c0a9ms2qspr-acl-2.2.52-bin
+/nix/store/fsxgigm2yb6xp3axxh342cx04kxrijg1-acl-2.2.52-dev
+/nix/store/igwsyzqig15qzgacq35vqdxsj0v3k1ba-attr-2.4.47-dev
+/nix/store/q4f9n8vv030pddpg1y2v5p38g0rkmffy-libarchive-3.2.2
+/nix/store/41zm7hyzc6qs2fzw2j2fs6c1j9bw7nfm-libarchive-3.2.2-dev
+/nix/store/djd2r4cnbcx4vfbj1qalg85vjbcslwxv-gcc-5.4.0-lib
+/nix/store/6xiq93r3dnny4m7svvb6hvq9qwjrixk8-gmp-6.1.1
+/nix/store/8rn45r9ndfq5h7mx58r35p2szky5ja6n-coreutils-8.25
+/nix/store/5kkjn2h1m852q8xh5kz0kfgi5nrbc1fz-perl-5.22.2
+/nix/store/321k7mdjv4fwf1rfss1r7nayni18iqaw-glibc-2.24-bin
+/nix/store/ppjqx7j8w22j0pahnq4gnzhk4vmibncn-pcre-8.39
+/nix/store/h9aqgpgspgjhygj63wpncfzvz5ys851n-gnugrep-2.25
+/nix/store/1q6v2661bkkzjx48q4n1d3q2ahlsha9q-linux-headers-4.4.10
+/nix/store/idwrh4bm5s4lnnb03d1j2b2rqg9x42h6-glibc-2.24-dev
+/nix/store/nm9r5lymydnsrlxjn30ym2kix6mbyr19-binutils-2.27
+/nix/store/wb8x0kjry7xvh4jqlx391lr0bffqrzhz-gcc-5.4.0
+/nix/store/yn4s58frawcqxcid79npmy2aq8cxcjj1-gcc-5.4.0-man
+/nix/store/dp2nf60lqzy1kbhd78ndf5nm3fb3qicd-gcc-wrapper-5.4.0
+/nix/store/glhpbq9nhyrrzzbnbdg41vn9h717rrr7-gmp-6.1.1-dev
+/nix/store/gz5ph3m624zivi687zvy82izi2z39aik-ncurses-6.0
+/nix/store/ff3h3dl87xl0q99b963xpwxacsqaqb43-ncurses-6.0-man
+/nix/store/i3hxdbjgbagyslsqnfl7zkpnn6q32hxv-ncurses-6.0-dev
+/nix/store/dg7ak1hvlj66vgn4fwvddnnr4pfncd04-ghc-8.0.1
+/nix/store/pb3jxhy4z54i24i9s0kyszdmxd2xajc5-libtar-1.2.20
+/nix/store/1nc7kaw3lp574hhi2bfxdb490q5kp2m8-project3-1.0.0
+```
+
+After closure minimization we get this dependency graph:
+
+```bash
+$ nix-build -A project3-minimal release2.nix 
+...
+/nix/store/i4fypk5m0rdwribpwacdd1nbzbfqcnpc-project3-minimal
+$ nix-store --query --requisites result
+/nix/store/jm1n87rp8vr90j9ahcrfzr57nc2r8vgf-glibc-2.24
+/nix/store/djd2r4cnbcx4vfbj1qalg85vjbcslwxv-gcc-5.4.0-lib
+/nix/store/6xiq93r3dnny4m7svvb6hvq9qwjrixk8-gmp-6.1.1
+/nix/store/pb3jxhy4z54i24i9s0kyszdmxd2xajc5-libtar-1.2.20
+/nix/store/i4fypk5m0rdwribpwacdd1nbzbfqcnpc-project3-minimal
+```
+
+Much smaller!  Note that the executable is still not fully statically linked.
+Only the Haskell dependencies have been statically linked.  Most of the
+remaining space is due to using `glibc`:
+
+```bash
+$ du -hs /nix/store/jm1n87rp8vr90j9ahcrfzr57nc2r8vgf-glibc-2.24/
+23M	/nix/store/jm1n87rp8vr90j9ahcrfzr57nc2r8vgf-glibc-2.24/
+```
+
+The actual `project3` executable is tiny in comparison:
+
+```bash
+$ du -hs /nix/store/i4fypk5m0rdwribpwacdd1nbzbfqcnpc-project3-minimal
+788K	/nix/store/i4fypk5m0rdwribpwacdd1nbzbfqcnpc-project3-minimal
+```
+
+If we wanted to get the size down further we'd need to use something like
+`musl` instead of `glibc`.
+
 # Conclusion
 
 This concludes the section on exploring and customizing Haskell packages.  This
