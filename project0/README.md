@@ -113,7 +113,7 @@ $ nix-build release0.nix
 This time we get a cache hit and reuse the first build since our directory is
 now bit-for-bit identical to when we first ran `nix-build`.
 
-These wasteful rebuilds are one one reason that I don't recommend using
+These wasteful rebuilds are one reason that I don't recommend using
 `nix-build` to build the root Haskell project.  Instead, the next section
 describes how to use `cabal` with Nix to avoid the issue of wasteful rebuilds.
 
