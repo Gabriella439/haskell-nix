@@ -3,7 +3,11 @@ let
 
   nixpkgs = builtins.fromJSON (builtins.readFile ./nixpkgs.json);
 
-  src = bootstrap.fetchgit { inherit (nixpkgs) url rev sha256; };
+  src = bootstrap.fetchFromGitHub {
+    owner = "NixOS";
+    repo  = "nixpkgs";
+    inherit (nixpkgs) rev sha256;
+  };
 
   pkgs = import src { };
 

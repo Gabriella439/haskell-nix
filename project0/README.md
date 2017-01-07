@@ -171,7 +171,7 @@ The `nixpkgs` manual notes that if you only have Haskell dependencies you
 can also just run the following command once:
 
 ```
-$ nix-shell -A env release0.nix --command 'cabal configure'
+$ nix-shell -A env release0.nix --run 'cabal configure'
 ```
 
 ... and then run all the other `cabal` commands without the Nix shell.  However,
@@ -265,7 +265,11 @@ let
 
   nixpkgs = builtins.fromJSON (builtins.readFile ./nixpkgs.json);
 
-  src = bootstrap.fetchgit { inherit (nixpkgs) url rev sha256; };
+  src = bootstrap.fetchFromGitHub {
+    owner = "NixOS";
+    repo  = "nixpkgs";
+    inherit (nixpkgs) rev sha256;
+  };
 
   pkgs = import src { };
 
