@@ -171,7 +171,7 @@ The `nixpkgs` manual notes that if you only have Haskell dependencies you
 can also just run the following command once:
 
 ```
-$ nix-shell -A env release0.nix --command 'cabal configure'
+$ nix-shell -A env release0.nix --run 'cabal configure'
 ```
 
 ... and then run all the other `cabal` commands without the Nix shell.  However,
