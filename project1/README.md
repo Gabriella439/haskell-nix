@@ -132,6 +132,11 @@ in
   }
 ```
 
+By default, `import <nixpkgs> { }` will implicitly use an empty or user-defined
+configuration in `~/.nixpkgs/config.nix` or `$NIXPKGS_CONFIG`.  The above
+configuration overrides that behavior with an explicit `config` defined within
+the same file.
+
 This new derivation now references a `turtle.nix` file generated from
 `cabal2nix` by running:
 
