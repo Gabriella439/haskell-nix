@@ -97,6 +97,17 @@ names like `NixOS-16.09` (analogous to `stack`'s LTS releases) and then an
 unstable channel named `nixpkgs-unstable` (analogous to `stack`'s nightly
 releases)
 
+# Related tools
+
+Before continuing, I'd like to mention some other tools for mixing Haskell with
+Nix:
+
+* [`tinc`](https://github.com/sol/tinc/blob/nixpkgs/NIX.md) - this uses
+  `cabal`'s solver to select which Haskell packages to use instead of the
+  curated Haskell package set from `nixpkgs`
+* [`styx`](https://github.com/jyp/styx) - This tool provides a `stack`-like
+  interface to managing Haskell dependencies using Nix
+
 # Setup
 
 Before you begin, you must install Nix if you haven't already:
