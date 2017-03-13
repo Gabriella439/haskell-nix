@@ -65,9 +65,9 @@ The main disadvantage of using Nix over `stack` are:
 
 *   No Windows support
 
-    Nix does not appear to work at all on Windows
-
-    [There is hope for Windows 10](https://github.com/NixOS/nix/issues/1038)
+    Nix does not yet work on Windows but
+    [there is a very good chance](https://github.com/NixOS/nix/issues/1038) that
+    Nix can be ported to Windows soon
 
 *   Poor OS X support for stable NixOS releases
 
@@ -88,10 +88,13 @@ The main disadvantage of using Nix over `stack` are:
     Nix is an untyped language with no special Haskell integration, so error
     messages are unhelpful
 
-*   No incremental compilation
+*   Nix cannot incrementally compile Haskell libraries
 
-    While it's technically possible to support it using Nix, it's currently
-    not working
+    Note that you can still use Nix to provision a development environment and
+    incrementally compile a Haskell package using cabal. However, if you use Nix
+    to build the package then Nix will build the package from scratch for every
+    minor change. In theory, this could be fixed to have Nix directly support
+    incremental Haskell builds but this has not been done yet not.
 
 *   Worse user experience
 
