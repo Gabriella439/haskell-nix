@@ -141,7 +141,7 @@ This new derivation now references a `turtle.nix` file generated from
 `cabal2nix` by running:
 
 ```bash
-$ cabal2nix cabal://turtle-1.3.0 > turtle.nix
+$ cabal2nix cabal://turtle-1.3.2 > turtle.nix
 ```
 
 If you try to run that and the command fails with this error message:
@@ -163,8 +163,8 @@ The generated `turtle.nix` file looks like this:
 }:
 mkDerivation {
   pname = "turtle";
-  version = "1.3.0";
-  sha256 = "0iwsd78zhzc70d3dflshmy1h8qzn3x6mhij0h0gk92rc6iww2130";
+  version = "1.3.2";
+  sha256 = "0pbvkqqhiaddyhlqcrk48w7li81dijw92wwhchwqh1my1363n5pq";
   libraryHaskellDepends = [
     ansi-wl-pprint async base bytestring clock directory foldl hostname
     managed optional-args optparse-applicative process stm
@@ -433,29 +433,30 @@ revision of the current `master` branch.
 difference is that we now depend on the `turtle-2.nix` file:
 
 ```nix
-let
-  config = {
-    packageOverrides = pkgs: rec {
-      haskellPackages = pkgs.haskellPackages.override {
-        overrides = haskellPackagesNew: haskellPackagesOld: rec {
-          optparse-applicative =
-            haskellPackagesNew.callPackage ./optparse-applicative-2.nix { };
-
-          project1 =
-            haskellPackagesNew.callPackage ./default.nix { };
-
-          turtle =
-            haskellPackagesNew.callPackage ./turtle-2.nix { };
-        };
-      };
-    };
+{ mkDerivation, ansi-wl-pprint, async, base, bytestring, clock
+, directory, doctest, fetchgit, foldl, hostname, managed
+, optional-args, optparse-applicative, process, stdenv, stm
+, system-fileio, system-filepath, temporary, text, time
+, transformers, unix, unix-compat
+}:
+mkDerivation {
+  pname = "turtle";
+  version = "1.3.2";
+  src = fetchgit {
+    url = "https://github.com/Gabriel439/Haskell-Turtle-Library.git";
+    sha256 = "0cbs3yi4glqhv3419hxihvpsgcj2h2sirbgym5d45hz4d32n9i67";
+    rev = "21b50f09e04b4e149b3c5a5f12405ed608cda2ab";
   };
-
-  pkgs = import <nixpkgs> { inherit config; };
-
-in
-  { project1 = pkgs.haskellPackages.project1;
-  }
+  libraryHaskellDepends = [
+    ansi-wl-pprint async base bytestring clock directory foldl hostname
+    managed optional-args optparse-applicative process stm
+    system-fileio system-filepath temporary text time transformers unix
+    unix-compat
+  ];
+  testHaskellDepends = [ base doctest ];
+  description = "Shell programming, Haskell-style";
+  license = stdenv.lib.licenses.bsd3;
+}
 ```
 
 ... and the difference between `turtle.nix` and `turtle-2.nix` is that the
@@ -474,12 +475,12 @@ repository:
 > , system-fileio, system-filepath, temporary, text, time
 > , transformers, unix, unix-compat
 10c10,14
-<   sha256 = "0iwsd78zhzc70d3dflshmy1h8qzn3x6mhij0h0gk92rc6iww2130";
+<   sha256 = "0pbvkqqhiaddyhlqcrk48w7li81dijw92wwhchwqh1my1363n5pq";
 ---
 >   src = fetchgit {
 >     url = "https://github.com/Gabriel439/Haskell-Turtle-Library.git";
->     sha256 = "1gib4m85xk7h8zdrxpi5sxnjd35l3xnprg9kdy3cflacdzfn9pak";
->     rev = "ba9c992933ae625cef40a88ea16ee857d1b93e13";
+>     sha256 = "0cbs3yi4glqhv3419hxihvpsgcj2h2sirbgym5d45hz4d32n9i67";
+>     rev = "21b50f09e04b4e149b3c5a5f12405ed608cda2ab";
 >   };
 ```
 
@@ -496,6 +497,139 @@ $ cabal2nix /path/to/turtle > turtle.nix
 ... and then reference `./turtle.nix` in your `release.nix` file.  Now your
 build will automatically pull in any changes you make to your source checkout of
 `turtle`.
+
+# Changing the compiler
+
+You can also override the GHC version used to compiler your project, which
+`release5.nix` illustrates:
+
+```nix
+{ compiler ? "ghc802" }:
+
+let
+  config = {
+    packageOverrides = pkgs: rec {
+      haskell.packages.${compiler} = pkgs.haskell.packages.${compiler}.override {
+        overrides = haskellPackagesNew: haskellPackagesOld: rec {
+          optparse-applicative =
+            haskellPackagesNew.callPackage ./optparse-applicative-2.nix { };
+
+          project1 =
+            haskellPackagesNew.callPackage ./default.nix { };
+
+          turtle =
+            haskellPackagesNew.callPackage ./turtle-2.nix { };
+        };
+      };
+    };
+  };
+
+  pkgs = import <nixpkgs> { inherit config; };
+
+in
+  { project1 = pkgs.haskell.packages.${compiler}.project1;
+  }
+```
+
+By default, the above project is built using GHC 8.0.2:
+
+```bash
+$ nix-build -A project1 release5.nix
+...
+Using ghc version 8.0.2 found on system at:
+/nix/store/7nl6dii88xd761nnz3xyh11qcnrqvqri-ghc-8.0.2/bin/ghc
+Using ghc-pkg version 8.0.2 found on system at:
+/nix/store/7nl6dii88xd761nnz3xyh11qcnrqvqri-ghc-8.0.2/bin/ghc-pkg
+...
+/nix/store/0mw2v9h6f3fz1p9bwy48qxsr5637550s-project1-1.0.0
+```
+
+... but you can now override the compiler on the command line like this:
+
+```bash
+$ nix-build --argstr compiler ghc7103 -A project1 release5.nix
+...
+building path(s) ‘/nix/store/2c5w9j0dam8m2pn35jvbq2namf8y723f-optparse-applicative-0.13.0.0’
+setupCompilerEnvironmentPhase
+Build with /nix/store/ik664w3cxq2jzr5kby0gwmcm0k96xgmg-ghc-7.10.3.
+unpacking sources
+unpacking source archive /nix/store/b55m0akvijaxps1lzr424m8y4y4q6awv-optparse-applicative-0.13.0.0.tar.gz
+source root is optparse-applicative-0.13.0.0
+setting SOURCE_DATE_EPOCH to timestamp 1471231137 of file optparse-applicative-0.13.0.0/tests/test.hs
+patching sources
+compileBuildDriverPhase
+setupCompileFlags: -package-db=/private/var/folders/c9/zf_25xbx7bx8yhsxm4q4vw6m0000gn/T/nix-build-optparse-applicative-0.13.0.0.drv-0/package.conf.d -j8 -threaded
+[1 of 1] Compiling Main             ( Setup.hs, /private/var/folders/c9/zf_25xbx7bx8yhsxm4q4vw6m0000gn/T/nix-build-optparse-applicative-0.13.0.0.drv-0/Main.o )
+Linking Setup ...
+configuring
+configureFlags: --verbose --prefix=/nix/store/2c5w9j0dam8m2pn35jvbq2namf8y723f-optparse-applicative-0.13.0.0 --libdir=$prefix/lib/$compiler --libsubdir=$pkgid --with-gcc=clang --package-db=/private/var/folders/c9/zf_25xbx7bx8yhsxm4q4vw6m0000gn/T/nix-build-optparse-applicative-0.13.0.0.drv-0/package.conf.d --ghc-option=-optl=-Wl,-headerpad_max_install_names --disable-split-objs --disable-library-profiling --disable-executable-profiling --enable-shared --disable-coverage --enable-library-vanilla --enable-executable-dynamic --disable-tests
+Configuring optparse-applicative-0.13.0.0...
+Setup: At least the following dependencies are missing:
+semigroups >=0.10 && <0.19
+builder for ‘/nix/store/kz5ngjwspkky7677vfcjfkliglsxw8nq-optparse-applicative-0.13.0.0.drv’ failed with exit code 1
+cannot build derivation ‘/nix/store/4ll08plvc8wmx31mvvsxs83fg6wp849j-turtle-1.3.2.drv’: 1 dependencies couldn't be built
+cannot build derivation ‘/nix/store/q40kf7b4d5xwlrnyrflib3qzdc8vfqly-project1-1.0.0.drv’: 1 dependencies couldn't be built
+error: build of ‘/nix/store/q40kf7b4d5xwlrnyrflib3qzdc8vfqly-project1-1.0.0.drv’ failed
+```
+
+Note that the build may fail when you downgrade the compiler.  For example, this
+build fails because of a missing `semigroups` dependency.  This is because of the
+following clause in the `optparse-applicative.cabal` file:
+
+```
+  if !impl(ghc >= 8)
+    build-depends:     semigroups                      >= 0.10 && < 0.19
+```
+
+... which `cabal2nix` ignores because it assumes that the current GHC version is
+GHC 8.  However, we can tweak our `optparse-applicative` dependency to manually
+add the `semigroups` dependency in `release6.nix`:
+
+```haskell
+{ compiler ? "ghc802" }:
+
+let
+  config = {
+    packageOverrides = pkgs: rec {
+      haskell.packages.${compiler} = pkgs.haskell.packages.${compiler}.override {
+        overrides = haskellPackagesNew: haskellPackagesOld: rec {
+          optparse-applicative =
+            pkgs.haskell.lib.addBuildDepend
+              (haskellPackagesNew.callPackage ./optparse-applicative-2.nix { })
+              haskellPackagesNew.semigroups;
+
+          project1 =
+            haskellPackagesNew.callPackage ./default.nix { };
+
+          turtle =
+            haskellPackagesNew.callPackage ./turtle-2.nix { };
+        };
+      };
+    };
+  };
+
+  pkgs = import <nixpkgs> { inherit config; };
+
+in
+  { project1 = pkgs.haskell.packages.${compiler}.project1;
+  }
+```
+
+... and now the build succeeds:
+
+```bash
+$ nix-build --argstr compiler ghc7103 -A project1 release6.nix
+...
+Using ghc version 7.10.3 found on system at:
+/nix/store/ik664w3cxq2jzr5kby0gwmcm0k96xgmg-ghc-7.10.3/bin/ghc
+Using ghc-pkg version 7.10.3 found on system at:
+/nix/store/ik664w3cxq2jzr5kby0gwmcm0k96xgmg-ghc-7.10.3/bin/ghc-pkg
+...
+/nix/store/9fmspa6dz93vg84d2c5bl9y1hszxmk7v-project1-1.0.0
+```
+
+The [fourth section](../project3/README.md) of this tutorial contains more details
+on how to tweak Haskell builds.
 
 # Conclusion
 

@@ -6,11 +6,11 @@
 }:
 mkDerivation {
   pname = "turtle";
-  version = "1.3.0";
+  version = "1.3.2";
   src = fetchgit {
     url = "https://github.com/Gabriel439/Haskell-Turtle-Library.git";
-    sha256 = "1gib4m85xk7h8zdrxpi5sxnjd35l3xnprg9kdy3cflacdzfn9pak";
-    rev = "ba9c992933ae625cef40a88ea16ee857d1b93e13";
+    sha256 = "0cbs3yi4glqhv3419hxihvpsgcj2h2sirbgym5d45hz4d32n9i67";
+    rev = "21b50f09e04b4e149b3c5a5f12405ed608cda2ab";
   };
   libraryHaskellDepends = [
     ansi-wl-pprint async base bytestring clock directory foldl hostname

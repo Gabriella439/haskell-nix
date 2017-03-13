@@ -6,8 +6,8 @@
 }:
 mkDerivation {
   pname = "turtle";
-  version = "1.3.0";
-  sha256 = "0iwsd78zhzc70d3dflshmy1h8qzn3x6mhij0h0gk92rc6iww2130";
+  version = "1.3.2";
+  sha256 = "0pbvkqqhiaddyhlqcrk48w7li81dijw92wwhchwqh1my1363n5pq";
   libraryHaskellDepends = [
     ansi-wl-pprint async base bytestring clock directory foldl hostname
     managed optional-args optparse-applicative process stm
