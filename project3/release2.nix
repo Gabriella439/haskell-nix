@@ -1,14 +1,6 @@
 let
   config = rec {
     packageOverrides = pkgs: rec {
-      project3-minimal = pkgs.stdenv.mkDerivation {
-        name = "project3-minimal";
-        buildCommand = ''
-          mkdir -p $out/bin
-          cp ${haskellPackages.project3}/bin/project3 $out/bin/project3
-        '';
-      };
-
       docker-container-large = pkgs.dockerTools.buildImage {
         name = "project3-container";
         config.Cmd = [ "${haskellPackages.project3}/bin/project3" ];
@@ -16,7 +8,7 @@ let
 
       docker-container-small = pkgs.dockerTools.buildImage {
         name = "project3-container";
-        config.Cmd = [ "${project3-minimal}/bin/project3" ];
+        config.Cmd = [ "${haskellPackages.project3-minimal}/bin/project3" ];
       };
 
       haskellPackages = pkgs.haskellPackages.override {
@@ -32,17 +24,35 @@ let
                   enableSharedExecutables = false;
                 }
               );
+
+          project3-minimal =
+            pkgs.haskell.lib.overrideCabal
+              ( haskellPackagesNew.callPackage ./default.nix {
+                  tar = pkgs.libtar;
+                }
+              )
+              ( oldDerivation: {
+                  testToolDepends = [ pkgs.libarchive ];
+                  enableSharedExecutables = false;
+                  enableSharedLibraries   = false;
+                  postFixup = ''
+                    rm -rf $out/lib
+                    rm -rf $out/share
+                    rm -rf $out/nix-support
+                  '';
+                }
+              );
         };
       };
     };
   };
 
-  pkgs = import <nixpkgs> { inherit config; };
+  pkgs = import <nixpkgs> { inherit config; system = "x86_64-linux"; };
 
 in
   { project3 = pkgs.haskellPackages.project3;
 
-    project3-minimal = pkgs.project3-minimal;
+    project3-minimal = pkgs.haskellPackages.project3-minimal;
 
     docker-container-small = pkgs.docker-container-small;
 

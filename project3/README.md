@@ -330,18 +330,9 @@ For example, `release2.nix` contains an example of building a `docker` container
 for the `project3` executable before and after closure minimization:
 
 ```nix
-
 let
-  config = {
+  config = rec {
     packageOverrides = pkgs: rec {
-      project3-minimal = pkgs.stdenv.mkDerivation {
-        name = "project3-minimal";
-        buildCommand = ''
-          mkdir -p $out/bin
-          cp ${haskellPackages.project3}/bin/project3 $out/bin/project3
-        '';
-      };
-
       docker-container-large = pkgs.dockerTools.buildImage {
         name = "project3-container";
         config.Cmd = [ "${haskellPackages.project3}/bin/project3" ];
@@ -349,7 +340,7 @@ let
 
       docker-container-small = pkgs.dockerTools.buildImage {
         name = "project3-container";
-        config.Cmd = [ "${project3-minimal}/bin/project3" ];
+        config.Cmd = [ "${haskellPackages.project3-minimal}/bin/project3" ];
       };
 
       haskellPackages = pkgs.haskellPackages.override {
@@ -365,17 +356,35 @@ let
                   enableSharedExecutables = false;
                 }
               );
+
+          project3-minimal =
+            pkgs.haskell.lib.overrideCabal
+              ( haskellPackagesNew.callPackage ./default.nix {
+                  tar = pkgs.libtar;
+                }
+              )
+              ( oldDerivation: {
+                  testToolDepends = [ pkgs.libarchive ];
+                  enableSharedExecutables = false;
+                  enableSharedLibraries   = false;
+                  postFixup = ''
+                    rm -rf $out/lib
+                    rm -rf $out/share
+                    rm -rf $out/nix-support
+                  '';
+                }
+              );
         };
       };
     };
   };
 
-  pkgs = import <nixpkgs> { inherit config; };
+  pkgs = import <nixpkgs> { inherit config; system = "x86_64-linux"; };
 
 in
   { project3 = pkgs.haskellPackages.project3;
 
-    project3-minimal = pkgs.project3-minimal;
+    project3-minimal = pkgs.haskellPackages.project3-minimal;
 
     docker-container-small = pkgs.docker-container-small;
 
@@ -419,9 +428,9 @@ $ du -hs $(readlink result)
 The reason this works is due to a combination of two tricks:
 
 * building statically linked executables for `project3` using
-  `enableSharedExecutables = false`
-* creating a separate package called `project3-minimal` that contains just the
-  `bin/` directory with the executable and nothing else
+  `enableSharedLibraries = false` and `enableSharedExecutables = false`
+* Removing the `/lib`, `/share`, and `/nix-support` directories which are not
+  necessary for the container
 
 The combination of these two things significantly slims down the dependency
 tree.  We can verify this using the handy `nix-store --query --requisites`
