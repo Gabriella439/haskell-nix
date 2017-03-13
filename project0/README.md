@@ -295,11 +295,7 @@ you want to pin `nixpkgs` to.  You can also omit the revision to pin to the
 current `master`.
 
 However, if you choose to go this route then you will need to set up an
-internal Hydra server to build and cache the following tools on Linux and OS X:
-
-* `cabal2nix`
-* `nix-prefetch-git`
-* `cabal-install`
+internal Hydra server to build and cache your project.
 
 Without an internal cache your developers will likely need to build these tools
 from scratch whenever your pinned `nixpkgs` drifts too far from the publicly
