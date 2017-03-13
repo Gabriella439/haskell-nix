@@ -61,17 +61,20 @@ The main benefits of using Nix over `stack` are:
     deep and sweeping changes to your toolchain, such as recompiling everything
     with security hardening 
 
-The main disadvantage of using Nix are:
+The main disadvantage of using Nix over `stack` are:
 
 *   No Windows support
 
-    Nix does not appear to work at all on Windows
+    Nix does not yet work on Windows but
+    [there is a very good chance](https://github.com/NixOS/nix/issues/1038) that
+    Nix can be ported to Windows soon
 
-*   Poor OS X support for stable releases
+*   Poor OS X support for stable NixOS releases
 
-    The public binary cache only caches OS X packages for unstable releases.
-    If you try to use a stable release you will spend hours building GHC
-    multiple times since Nix bootstraps GHC starting all the way from GHC 7.4
+    The public binary cache only caches OS X packages for unstable nixpkgs releases.
+    If you try to use a stable NixOS release you will spend hours building GHC
+    multiple times since Nix bootstraps GHC starting [all the way from GHC 7.4]
+    (https://github.com/NixOS/nixpkgs/issues/19926)
 
 *   Verbosity
 
@@ -84,6 +87,14 @@ The main disadvantage of using Nix are:
 
     Nix is an untyped language with no special Haskell integration, so error
     messages are unhelpful
+
+*   Nix cannot incrementally compile Haskell libraries
+
+    Note that you can still use Nix to provision a development environment and
+    incrementally compile a Haskell package using cabal. However, if you use Nix
+    to build the package then Nix will build the package from scratch for every
+    minor change. In theory, this could be fixed to have Nix directly support
+    incremental Haskell builds but this has not been done yet not.
 
 *   Worse user experience
 
