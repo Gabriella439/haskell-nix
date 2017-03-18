@@ -509,16 +509,20 @@ You can also override the GHC version used to compiler your project, which
 let
   config = {
     packageOverrides = pkgs: rec {
-      haskell.packages.${compiler} = pkgs.haskell.packages.${compiler}.override {
-        overrides = haskellPackagesNew: haskellPackagesOld: rec {
-          optparse-applicative =
-            haskellPackagesNew.callPackage ./optparse-applicative-2.nix { };
+      haskell = pkgs.haskell // {
+        packages = pkgs.haskell.packages // {
+          "${compiler}" = pkgs.haskell.packages."${compiler}".override {
+            overrides = haskellPackagesNew: haskellPackagesOld: rec {
+              optparse-applicative =
+                haskellPackagesNew.callPackage ./optparse-applicative-2.nix { };
 
-          project1 =
-            haskellPackagesNew.callPackage ./default.nix { };
+              project1 =
+                haskellPackagesNew.callPackage ./default.nix { };
 
-          turtle =
-            haskellPackagesNew.callPackage ./turtle-2.nix { };
+              turtle =
+                haskellPackagesNew.callPackage ./turtle-2.nix { };
+            };
+          };
         };
       };
     };
@@ -591,18 +595,22 @@ add the `semigroups` dependency in `release6.nix`:
 let
   config = {
     packageOverrides = pkgs: rec {
-      haskell.packages.${compiler} = pkgs.haskell.packages.${compiler}.override {
-        overrides = haskellPackagesNew: haskellPackagesOld: rec {
-          optparse-applicative =
-            pkgs.haskell.lib.addBuildDepend
-              (haskellPackagesNew.callPackage ./optparse-applicative-2.nix { })
-              haskellPackagesNew.semigroups;
+      haskell = pkgs.haskell // {
+        packages = pkgs.haskell.packages // {
+          "${compiler}" = pkgs.haskell.packages."${compiler}".override {
+            overrides = haskellPackagesNew: haskellPackagesOld: rec {
+              optparse-applicative =
+                pkgs.haskell.lib.addBuildDepend
+                  (haskellPackagesNew.callPackage ./optparse-applicative-2.nix { })
+                  haskellPackagesNew.semigroups;
 
-          project1 =
-            haskellPackagesNew.callPackage ./default.nix { };
+              project1 =
+                haskellPackagesNew.callPackage ./default.nix { };
 
-          turtle =
-            haskellPackagesNew.callPackage ./turtle-2.nix { };
+              turtle =
+                haskellPackagesNew.callPackage ./turtle-2.nix { };
+            };
+          };
         };
       };
     };
