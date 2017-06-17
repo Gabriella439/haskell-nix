@@ -27,19 +27,14 @@ let
 
           project3-minimal =
             pkgs.haskell.lib.overrideCabal
-              ( haskellPackagesNew.callPackage ./default.nix {
-                  tar = pkgs.libtar;
-                }
+              ( pkgs.haskell.lib.justStaticExecutables
+                  ( haskellPackagesNew.callPackage ./default.nix {
+                      tar = pkgs.libtar;
+                    }
+                  )
               )
               ( oldDerivation: {
                   testToolDepends = [ pkgs.libarchive ];
-                  enableSharedExecutables = false;
-                  enableSharedLibraries   = false;
-                  postFixup = ''
-                    rm -rf $out/lib
-                    rm -rf $out/share
-                    rm -rf $out/nix-support
-                  '';
                 }
               );
         };

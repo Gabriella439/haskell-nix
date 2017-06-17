@@ -359,19 +359,14 @@ let
 
           project3-minimal =
             pkgs.haskell.lib.overrideCabal
-              ( haskellPackagesNew.callPackage ./default.nix {
-                  tar = pkgs.libtar;
-                }
+              ( pkgs.haskell.lib.justStaticExecutables
+                  ( haskellPackagesNew.callPackage ./default.nix {
+                      tar = pkgs.libtar;
+                    }
+                  )
               )
               ( oldDerivation: {
                   testToolDepends = [ pkgs.libarchive ];
-                  enableSharedExecutables = false;
-                  enableSharedLibraries   = false;
-                  postFixup = ''
-                    rm -rf $out/lib
-                    rm -rf $out/share
-                    rm -rf $out/nix-support
-                  '';
                 }
               );
         };
@@ -425,12 +420,9 @@ $ du -hs $(readlink result)
 11M	/nix/store/3mkrcqjnqv5vwid4qcaf3p1i70y87096-project3-container.tar.gz
 ```
 
-The reason this works is due to a combination of two tricks:
-
-* building statically linked executables for `project3` using
-  `enableSharedLibraries = false` and `enableSharedExecutables = false`
-* Removing the `/lib`, `/share`, and `/nix-support` directories which are not
-  necessary for the container
+This works thanks to the `justStaticExecutables` utility, which statically
+links the built executable and removes other unnecessary directories from the
+built package.
 
 The combination of these two things significantly slims down the dependency
 tree.  We can verify this using the handy `nix-store --query --requisites`
