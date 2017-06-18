@@ -418,6 +418,10 @@ Cooking the image
 /nix/store/3mkrcqjnqv5vwid4qcaf3p1i70y87096-project3-container.tar.gz
 $ du -hs $(readlink result)
 11M	/nix/store/3mkrcqjnqv5vwid4qcaf3p1i70y87096-project3-container.tar.gz
+$ docker load -i result
+73bcfb39a3b5: Loading layer [==================================================>]   27.8MB/27.8MB
+$ docker run -it project3-container
+tar_open failed
 ```
 
 This works thanks to the `justStaticExecutables` utility, which statically
