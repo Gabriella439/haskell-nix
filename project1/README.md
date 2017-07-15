@@ -86,7 +86,7 @@ We can also see which version our project selects if we build our project
 using `nix-build`:
 
 ```bash
-$ nix-build -A project1 release0.nix
+$ nix-build --attr project1 release0.nix
 these derivations will be built:
   /nix/store/8g54hjpim7l9s41c9wpcn1h2q8m254m5-project1-1.0.0.drv
 building path(s) ‘/nix/store/pi47yvw46xv346brajyrblwqhjmglhaj-project1-1.0.0’
@@ -192,7 +192,7 @@ At the time of this writing, if you try to build `release1.nix` then you will
 get the following build error:
 
 ```bash
-$ nix-build -A project1 release1.nix
+$ nix-build --attr project1 release1.nix
 these derivations will be built:
   /nix/store/r780xwf197a2gxn3008raq5k6xxid8mh-turtle-1.3.0.drv
   /nix/store/y6g5ya8lis6250fcj0mrw1kybjdara9i-project1-1.0.0.drv
@@ -252,7 +252,7 @@ However, that will still fail to build due to a test suite failure in
 `optparse-applicative-0.13.0.0`:
 
 ```bash
-$ nix-build -A project1 release2.nix
+$ nix-build --attr project1 release2.nix
 these derivations will be built:
   /nix/store/55b9hxwvknznfdqcksdfp8fqxifgw00p-optparse-applicative-0.13.0.0.drv
   /nix/store/9m816lg47c6wcgmjqpfxsyml4hgc739d-turtle-1.3.0.drv
@@ -322,7 +322,7 @@ in
 ... and now the build succeeds:
 
 ```bash
-$ nix-build -A project1 release3.nix 
+$ nix-build --attr project1 release3.nix 
 these derivations will be built:
   /nix/store/f17zxqqk582my4qfig78yvi6nv0vb588-turtle-1.3.0.tar.gz.drv
   /nix/store/vn2m1agg92fbmwj1h9168jywy5wmarah-turtle-1.3.0.drv
@@ -538,7 +538,7 @@ in
 By default, the above project is built using GHC 8.0.2:
 
 ```bash
-$ nix-build -A project1 release5.nix
+$ nix-build --attr project1 release5.nix
 ...
 Using ghc version 8.0.2 found on system at:
 /nix/store/7nl6dii88xd761nnz3xyh11qcnrqvqri-ghc-8.0.2/bin/ghc
@@ -551,7 +551,7 @@ Using ghc-pkg version 8.0.2 found on system at:
 ... but you can now override the compiler on the command line like this:
 
 ```bash
-$ nix-build --argstr compiler ghc7103 -A project1 release5.nix
+$ nix-build --argstr compiler ghc7103 --attr project1 release5.nix
 ...
 building path(s) ‘/nix/store/2c5w9j0dam8m2pn35jvbq2namf8y723f-optparse-applicative-0.13.0.0’
 setupCompilerEnvironmentPhase
@@ -626,7 +626,7 @@ in
 ... and now the build succeeds:
 
 ```bash
-$ nix-build --argstr compiler ghc7103 -A project1 release6.nix
+$ nix-build --argstr compiler ghc7103 --attr project1 release6.nix
 ...
 Using ghc version 7.10.3 found on system at:
 /nix/store/ik664w3cxq2jzr5kby0gwmcm0k96xgmg-ghc-7.10.3/bin/ghc

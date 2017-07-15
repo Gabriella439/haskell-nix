@@ -8,7 +8,7 @@ to fix failing builds).
 Begin by running the following command to build the `morte` package:
 
 ```bash
-$ nix-build '<nixpkgs>' -A haskellPackages.morte
+$ nix-build '<nixpkgs>' --attr haskellPackages.morte
 ...
 /nix/store/z8rf74cylf9dqj63yb8p3j37sn8n49zf-morte-1.6.2
 ```
@@ -295,7 +295,7 @@ suite runs and passes, indicating that our code works with TAR files generated
 by `bsdtar`:
 
 ```bash
-$ nix-build -A project3 release1.nix these derivations will be built:
+$ nix-build --attr project3 release1.nix these derivations will be built:
   /nix/store/i7i38jx93qwxzwg9xakbd8lrfv9kbpi4-project3-1.0.0.drv
 building path(s) ‘/nix/store/2z661k6rnwyiimympn1anmghdybi7izc-project3-1.0.0’
 ...
@@ -394,7 +394,7 @@ and depends on several dynamic libraries that are packaged with `ghc`.  The
 final container is over 250 MB compressed and 1.5 GB uncompressed.
 
 ```bash
-$ nix-build -A docker-container-large release2.nix 
+$ nix-build --attr docker-container-large release2.nix 
 ...
 building path(s) ‘/nix/store/ml441hr1l5gw9piq8ysnjdaazjxapsci-project3-container.tar.gz’
 Adding layer
@@ -409,7 +409,7 @@ If you build the `docker-container-small` attribute you will get a much
 smaller container that is only 11 MB compressed and 27 MB uncompressed:
 
 ```bash
-$ nix-build -A docker-container-small release2.nix 
+$ nix-build --attr docker-container-small release2.nix 
 ...
 building path(s) ‘/nix/store/3mkrcqjnqv5vwid4qcaf3p1i70y87096-project3-container.tar.gz’
 Adding layer
@@ -435,7 +435,7 @@ command which lets you view all transitive dependencies for a given Nix package.
 Before the closure minimization, we get this dependency tree:
 
 ```bash
-$ nix-build -A project3 release2.nix these derivations will be built:
+$ nix-build --attr project3 release2.nix these derivations will be built:
 ...
 /nix/store/1nc7kaw3lp574hhi2bfxdb490q5kp2m8-project3-1.0.0
 
@@ -483,7 +483,7 @@ $ nix-store --query --requisites result
 After closure minimization we get this dependency tree:
 
 ```bash
-$ nix-build -A project3-minimal release2.nix 
+$ nix-build --attr project3-minimal release2.nix 
 ...
 /nix/store/i4fypk5m0rdwribpwacdd1nbzbfqcnpc-project3-minimal
 $ nix-store --query --requisites result
