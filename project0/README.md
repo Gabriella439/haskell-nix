@@ -425,6 +425,10 @@ pass on the command line from `env` to `project0.env`:
 $ nix-shell --attr project0.env release2.nix
 ```
 
+Like before, `nix-shell` and `nix-build` take slightly different attributes:
+we specify the `project0` attribute when using `nix-build` and the
+`project0.env` attribute when using `nix-shell`.
+
 You can also avoid having to type this every time you initialize the project by
 creating the following `shell.nix` file:
 
