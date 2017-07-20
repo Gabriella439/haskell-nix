@@ -129,8 +129,8 @@ $ nix-shell --attr env release0.nix
 Normally `nix-shell` wouldn't require the `--attr` flag since `nix-shell` is
 designed to automatically compute the necessary development environment from
 the original derivation.  However, Haskell derivations are different and
-`nix-shell` doesn't work out of the box on them.  However, Haskell derivations
-are records that provide a `env` field which `nix-shell` can use to compute the
+`nix-shell` doesn't work out of the box on them.  Haskell derivations are
+records that provide a `env` field which `nix-shell` can use to compute the
 development environment.  We pass the `--attr env` flag to specify that
 `nix-shell` should compute the development environment from the derivation's
 `env` "attribute".
