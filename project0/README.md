@@ -123,10 +123,20 @@ You can open up a development environment for this project inside of a "Nix
 shell" by running:
 
 ```bash
-$ nix-shell -A env release0.nix
+$ nix-shell --attr env release0.nix
 ```
 
-... and then use `cabal` to build and run the `project0` executable:
+Normally `nix-shell` wouldn't require the `--attr` flag since `nix-shell` is
+designed to automatically compute the necessary development environment from
+the original derivation.  However, Haskell derivations are different and
+`nix-shell` doesn't work out of the box on them.  Haskell derivations are
+records that provide a `env` field which `nix-shell` can use to compute the
+development environment.  We pass the `--attr env` flag to specify that
+`nix-shell` should compute the development environment from the derivation's
+`env` "attribute".
+
+Once we open up the development environment we can use `cabal` to build and run
+the `project0` executable:
 
 ```bash
 $ cabal configure
@@ -171,7 +181,7 @@ The `nixpkgs` manual notes that if you only have Haskell dependencies you
 can also just run the following command once:
 
 ```
-$ nix-shell -A env release0.nix --run 'cabal configure'
+$ nix-shell --attr env release0.nix --run 'cabal configure'
 ```
 
 ... and then run all the other `cabal` commands without the Nix shell.  However,
@@ -397,18 +407,27 @@ all derivations in the set:
 $ nix-build release2.nix
 ```
 
-... or by specifying the attribute of the derivation you want to build:
+... or by specifying the attribute of the derivation you want to build using
+the same `--attr` flag we introduced before for `nix-shell`:
 
 ```bash
-$ nix-build -A project0 release2.nix
+$ nix-build --attr project0 release2.nix
 ```
+
+This `--attr` flag specifies that we only want to build the `project0` field
+of the record, and this flag comes in handy once the record has more than one
+field.
 
 You can also still open up a Nix shell, but you need to change the attribute you
 pass on the command line from `env` to `project0.env`:
 
 ```haskell
-$ nix-shell -A project0.env release2.nix
+$ nix-shell --attr project0.env release2.nix
 ```
+
+Like before, `nix-shell` and `nix-build` take slightly different attributes:
+we specify the `project0` attribute when using `nix-build` and the
+`project0.env` attribute when using `nix-shell`.
 
 You can also avoid having to type this every time you initialize the project by
 creating the following `shell.nix` file:

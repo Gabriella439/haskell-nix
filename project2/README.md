@@ -136,13 +136,13 @@ instead of one:
 If we only care about building the project, then we would just run:
 
 ```bash
-$ nix-build -A project2 release.nix
+$ nix-build --attr project2 release.nix
 ```
 
 ... but if we want to build and test our project, we can run:
 
 ```bash
-$ nix-build -A test release.nix
+$ nix-build --attr test release.nix
 these derivations will be built:
   /nix/store/6z0jc3s2ya8j226rgma73w03pdphqwx8-project2-1.0.0.drv
   /nix/store/k82nnkiszzfcnjxq29gcbmgnh5cbfc51-check.drv
