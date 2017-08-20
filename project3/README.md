@@ -515,8 +515,8 @@ If we wanted to get the size down further we'd need to use something like
 
 # Conclusion
 
-This concludes the section on exploring and customizing Haskell packages.  This
-is the last section of the tutorial
+This concludes the section on exploring and customizing Haskell packages.  The
+next section covers [simplified dependency management](../project4/README.md).
 
 [haskell-lib]: https://github.com/NixOS/nixpkgs/blob/master/pkgs/development/haskell-modules/lib.nix
 [generic-builder]: https://github.com/NixOS/nixpkgs/blob/master/pkgs/development/haskell-modules/generic-builder.nix
