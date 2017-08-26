@@ -1,0 +1,11 @@
+name: project4
+version: 1.0.0
+license: BSD3
+license-file: LICENSE
+cabal-version: >= 1.18
+build-type: Simple
+
+executable project4
+    build-depends: base < 5, foldl, text, turtle
+    main-is: Main.hs
+    default-language: Haskell2010
