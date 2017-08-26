@@ -155,6 +155,7 @@ order to follow the tutorial:
 * [Project 1 - Dependency management][proj1]
 * [Project 2 - Non-Haskell dependencies][proj2]
 * [Project 3 - Customizing Haskell projects ][proj3]
+* [Project 4 - Advanced dependency management][proj4]
 
 [awake]: http://www.awakenetworks.com/
 [nixpkgs-haskell]: https://nixos.org/nixpkgs/manual/#users-guide-to-the-haskell-infrastructure
@@ -162,3 +163,4 @@ order to follow the tutorial:
 [proj1]: ./project1/README.md
 [proj2]: ./project2/README.md
 [proj3]: ./project3/README.md
+[proj4]: ./project4/README.md

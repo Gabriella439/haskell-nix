@@ -1,4 +1,4 @@
-# Automating dependency management
+# Advanced dependency management
 
 <meta charset="UTF-8">
 
