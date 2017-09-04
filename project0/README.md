@@ -154,7 +154,7 @@ Unlike Nix, `cabal` will be smart and won't wastefully rebuild things that
 haven't changed.  This means we can safely re-run `cabal` without rebuilding the
 entire project from scratch:
 
-```haskell
+```bash
 $ cabal run project0
 Preprocessing executable 'project0' for project0-1.0.0...
 Running project0...
@@ -168,7 +168,7 @@ Haskell toolchain *except for `cabal`*.  For example, inside the Nix shell you
 will see that you are using a `ghc` provided by Nix, regardless of whether or
 not you have a global `ghc` installed:
 
-```haskell
+```bash
 $ which ghc  # The exact hash in the path might differ
 /nix/store/dg7ak1hvlj66vgn4fwvddnnr4pfncd04-ghc-8.0.1/bin/ghc
 ```
@@ -289,7 +289,7 @@ in
 
 ... where `nixpkgs.json` was generated using the `nix-prefetch-git` tool:
 
-```haskell
+```bash
 $ nix-prefetch-git https://github.com/NixOS/nixpkgs.git 2c288548b93b657365c27a0132a43ba0080870cc > nixpkgs.json
 $ cat nixpkgs.json
 {
@@ -421,7 +421,7 @@ field.
 You can also still open up a Nix shell, but you need to change the attribute you
 pass on the command line from `env` to `project0.env`:
 
-```haskell
+```bash
 $ nix-shell --attr project0.env release2.nix
 ```
 
@@ -432,14 +432,14 @@ we specify the `project0` attribute when using `nix-build` and the
 You can also avoid having to type this every time you initialize the project by
 creating the following `shell.nix` file:
 
-```haskell
+```nix
 (import ./release2.nix).project0.env
 ```
 
 ... replacing `release2.nix` with the name of your project's derivation file.
 Then you can just type:
 
-```haskell
+```bash
 $ nix-shell
 ```
 
