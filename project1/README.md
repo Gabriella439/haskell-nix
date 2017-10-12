@@ -500,7 +500,7 @@ build will automatically pull in any changes you make to your source checkout of
 
 # Changing the compiler
 
-You can also override the GHC version used to compiler your project, which
+You can also override the GHC version used to compile your project, which
 `release5.nix` illustrates:
 
 ```nix
