@@ -20,7 +20,7 @@ private Haskell projects across a team of developers.
 This guide is based partly on
 [the Haskell section of the `nixpkgs` manual][nixpkgs-haskell]
 and partly on experience using Nix and Haskell in production at
-[Awake Networks][awake].
+[Awake Security][awake].
 
 # Background
 
@@ -157,7 +157,7 @@ order to follow the tutorial:
 * [Project 3 - Customizing Haskell projects ][proj3]
 * [Project 4 - Advanced dependency management][proj4]
 
-[awake]: http://www.awakenetworks.com/
+[awake]: https://awakesecurity.com/
 [nixpkgs-haskell]: https://nixos.org/nixpkgs/manual/#users-guide-to-the-haskell-infrastructure
 [proj0]: ./project0/README.md
 [proj1]: ./project1/README.md
