@@ -102,6 +102,17 @@ The log output from `nix-build` notes that `turtle-1.2.8` was chosen for this
 build.  Your results might vary depending on which version of the `nixpkgs`
 channel that you have installed.
 
+Note that `nixpkgs` only curates the Haskell package set to build against the
+default version of the GHC compiler.  You can display the default compiler version
+by running the following command:
+
+```shell
+$ nix-instantiate --eval --expr '(import <nixpkgs> { }).ghc.version'
+```
+
+If you try to change the compiler (as described below) you may need to modify the
+Haskell package set to get them to build correctly.
+
 # Changing versions
 
 Suppose that we want to build against `turtle-1.3.0` for whatever reason.  This
