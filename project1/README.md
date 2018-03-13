@@ -316,7 +316,7 @@ However, that will still fail to build due to a test suite failure in
 `optparse-applicative-0.13.0.0`:
 
 ```bash
-$ nix-build --attr project1 release2.nix
+$ nix-build --attr project1 release2a.nix
 these derivations will be built:
   /nix/store/55b9hxwvknznfdqcksdfp8fqxifgw00p-optparse-applicative-0.13.0.0.drv
   /nix/store/9m816lg47c6wcgmjqpfxsyml4hgc739d-turtle-1.3.0.drv
