@@ -433,7 +433,7 @@ You can also avoid having to type this every time you initialize the project by
 creating the following `shell.nix` file:
 
 ```nix
-(import ./release2.nix).project0.env
+(import ./release2.nix {}).project0.env
 ```
 
 ... replacing `release2.nix` with the name of your project's derivation file.
