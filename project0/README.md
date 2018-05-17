@@ -334,7 +334,7 @@ This references another file in this same project called `default.nix`.  This
 file was generated using `cabal2nix` by running:
 
 ```bash
-$ cabal2nix . > default.nix
+$ cabal2nix ./. > default.nix
 ```
 
 ... and the generated `default.nix` file for this project is:
