@@ -112,6 +112,8 @@ Nix:
   curated Haskell package set from `nixpkgs`
 * [`styx`](https://github.com/jyp/styx) - This tool provides a `stack`-like
   interface to managing Haskell dependencies using Nix
+* [`haskell-overridez`](https://github.com/adetokunbo/haskell-overridez) -
+  Tool that automates dependency management as described in this guide
 
 # Setup
 
