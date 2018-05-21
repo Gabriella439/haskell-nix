@@ -219,7 +219,7 @@ error: build of ‘/nix/store/y6g5ya8lis6250fcj0mrw1kybjdara9i-project1-1.0.0.dr
 
 This error indicates that we can't upgrade `turtle-1.3.0` alone because
 `turtle-1.3.0` depends on `optparse-applicative-0.13.*` and the default version
-of `optparse-applicative` version that Nix selects is not in this range.  At the
+of `optparse-applicative` that Nix selects is not in this range.  At the
 time of this writing, Nix picks `optparse-applicative-0.12.1.0` as the default
 version.
 
