@@ -63,13 +63,6 @@ The main benefits of using Nix over `stack` are:
 
 The main disadvantage of using Nix over `stack` are:
 
-*   Poor OS X support for stable NixOS releases
-
-    The public binary cache only caches OS X packages for unstable nixpkgs releases.
-    If you try to use a stable NixOS release you will spend hours building GHC
-    multiple times since Nix bootstraps GHC starting
-    [all the way from GHC 7.4](https://github.com/NixOS/nixpkgs/issues/19926)
-
 *   Verbosity
 
     Nix derivations for Haskell projects are significantly more complex than
