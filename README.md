@@ -119,15 +119,15 @@ $ curl https://nixos.org/nix/install | sh
 You must also install `cabal2nix` and `nix-prefetch-git`:
 
 ```bash
-$ nix-env -i cabal2nix
-$ nix-env -i nix-prefetch-git
+$ nix-env --install cabal2nix
+$ nix-env --install nix-prefetch-git
 ```
 
 You also need to install `cabal` if you haven't done so already.  You can either
 use your installed `cabal` or you can use `nix` to install `cabal` for you:
 
 ```bash
-$ nix-env -i cabal-install
+$ nix-env --install cabal-install
 ```
 
 Make sure that you have a fairly recent version of `cabal` installed since these
