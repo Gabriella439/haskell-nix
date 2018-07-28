@@ -116,6 +116,12 @@ Before you begin, you must install Nix if you haven't already:
 $ curl https://nixos.org/nix/install | sh
 ```
 
+Install `ghc` to compile your Haskell projects:
+
+```bash
+$ nix-env --install ghc
+```
+
 You must also install `cabal2nix` and `nix-prefetch-git`:
 
 ```bash
