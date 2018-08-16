@@ -213,25 +213,22 @@ find all the officially supported Nix channels here:
 
 * [Nix channels][channels]
 
-The default Nix installation will subscribe you to the unstable Nix channel.
-The only exception is if you are using NixOS as your operating system, in which
-case you already have Nix installed and you will be subscribed to a stable Nix
-channel by default.
+The default Nix installation will subscribe you some channel (i.e. release) of
+Nixpkgs (a package repository for Nix).
 
-You can tell which channel you have installed by running `nix-channel --list`.
-For example, if you are on OS X, the output will probably say that you are
-subscribed to the unstable channel:
+You can tell which release of Nixpkgs you are using by running this command:
 
 ```bash
-$ nix-channel --list
-nixpkgs https://nixos.org/channels/nixpkgs-unstable
+$ nix-instantiate --eval --expr 'builtins.readFile <nixpkgs/.version>'
+"18.03\n"
 ```
 
-... whereas on NixOS you probably be subscribed to a stable channel:
+... and you can also obtain the exact git revision of the Nixpkgs repository
+that the channel was cut from using this command:
 
 ```bash
-$ sudo nix-channel --list
-nixos https://nixos.org/channels/nixos-16.09
+$ nix-instantiate --eval --expr 'builtins.readFile <nixpkgs/.git-revision>'
+"411cc559c052feb6e20a01fc6d5fa63cba09ce9a"
 ```
 
 You should probably use the default channel selected for you.  If you are using
