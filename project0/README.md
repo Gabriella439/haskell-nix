@@ -43,21 +43,18 @@ $ readlink result
 /nix/store/x28vx2rfnffl1clmxn5054bxwqyln2j0-project0-1.0.0
 ```
 
-Right now the contents of that directory are just an executable file and a
-`LICENSE`:
+Right now the contents of that directory are just an executable file and an
+empty library directory:
 
 ```bash
 $ tree result
 result
 ├── bin
 │   └── project0
-└── share
-    └── doc
-        └── x86_64-linux-ghc-8.0.1
-            └── project0-1.0.0
-                └── LICENSE
+└── lib
+    └── links
 
-5 directories, 2 files
+3 directories, 1 file
 ```
 
 As the project grows more complex we'll see additional build outputs in this
