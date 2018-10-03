@@ -259,7 +259,7 @@ derivation from the preceding generated overrides.
 
 We can take advantage of this trick to organize our overrides into sections:
 one set of overrides for disabling tests, another set of overrides for
-jailbreaking packages, and another set of overrides for jailbreaking packages.
+jailbreaking packages, and another set of overrides for disabling haddocks.
 
 The following `release3.nix` shows how to take advantage of Nix's automation
 features to streamline such a configuration:
