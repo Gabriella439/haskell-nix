@@ -232,7 +232,7 @@ nixpkgs https://nixos.org/channels/nixpkgs-unstable
 
 ```bash
 $ sudo nix-channel --list
-nixos https://nixos.org/channels/nixos-16.09
+nixos https://nixos.org/channels/nixos-18.09
 ```
 
 You should probably use the default channel selected for you.  If you are using
@@ -240,11 +240,11 @@ a Linux operating system other than NixOS, you can safely change to a stable
 channel if you prefer by running:
 
 ```bash
-$ nix-channel --add https://nixos.org/channels/nixos-16.09-small nixpkgs
+$ nix-channel --add https://nixos.org/channels/nixos-18.09-small nixpkgs
 $ nix-channel --update nixpkgs
 ```
 
-... replacing `16.09` with whatever stable release version you wish to use.
+... replacing `18.09` with whatever stable release version you wish to use.
 
 However, you should be very careful about using a stable release on OS X because
 the public binary cache only caches OS X build products for the unstable
