@@ -38,7 +38,7 @@ project, stores the build output in
 symlink in the current directory named `result` pointing to that directory in
 the `/nix/store`:
 
-```
+```bash
 $ readlink result
 /nix/store/x28vx2rfnffl1clmxn5054bxwqyln2j0-project0-1.0.0
 ```
