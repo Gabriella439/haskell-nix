@@ -156,8 +156,7 @@ entire project from scratch:
 
 ```bash
 $ cabal run project0
-Preprocessing executable 'project0' for project0-1.0.0...
-Running project0...
+Up to date
 Hello, world!
 ```
 
