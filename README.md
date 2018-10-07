@@ -91,7 +91,7 @@ The main disadvantage of using Nix over `stack` are:
 Both Nix and `stack` use curated package sets instead of version bounds for
 dependency management.  `stack` calls these package sets "resolvers" whereas
 Nix calls these package sets "channels".  Nix provides stable channels with
-names like `NixOS-16.09` (analogous to `stack`'s LTS releases) and then an
+names like `NixOS-18.09` (analogous to `stack`'s LTS releases) and then an
 unstable channel named `nixpkgs-unstable` (analogous to `stack`'s nightly
 releases)
 
