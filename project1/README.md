@@ -493,8 +493,7 @@ $ cabal2nix https://github.com/Gabriel439/Haskell-Turtle-Library.git --revision 
 wish to use.  You can omit the revision if you want `cabal2nix` to select the
 revision of the current `master` branch.
 
-`release4.nix` shows an example of depending on `turtle` from Github.  The only
-difference is that we now depend on the `turtle-2.nix` file:
+Result looks like this `turtle-2.nix`:
 
 ```nix
 { mkDerivation, ansi-wl-pprint, async, base, bytestring, clock
@@ -521,6 +520,17 @@ mkDerivation {
   description = "Shell programming, Haskell-style";
   license = stdenv.lib.licenses.bsd3;
 }
+```
+
+`release4.nix` shows an example of depending on `turtle` from Github.  The only
+difference is that we now depend on the `turtle-2.nix` file:
+
+```bash
+diff release3.nix release4.nix
+13c13
+<             haskellPackagesNew.callPackage ./turtle.nix { };
+---
+>             haskellPackagesNew.callPackage ./turtle-2.nix { };
 ```
 
 ... and the difference between `turtle.nix` and `turtle-2.nix` is that the
