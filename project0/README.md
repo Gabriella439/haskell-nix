@@ -38,7 +38,7 @@ project, stores the build output in
 symlink in the current directory named `result` pointing to that directory in
 the `/nix/store`:
 
-```
+```bash
 $ readlink result
 /nix/store/x28vx2rfnffl1clmxn5054bxwqyln2j0-project0-1.0.0
 ```
@@ -155,8 +155,7 @@ entire project from scratch:
 
 ```bash
 $ cabal run project0
-Preprocessing executable 'project0' for project0-1.0.0...
-Running project0...
+Up to date
 Hello, world!
 ```
 
@@ -236,11 +235,11 @@ a Linux operating system other than NixOS, you can safely change to a stable
 channel if you prefer by running:
 
 ```bash
-$ nix-channel --add https://nixos.org/channels/nixos-16.09-small nixpkgs
+$ nix-channel --add https://nixos.org/channels/nixos-18.09-small nixpkgs
 $ nix-channel --update nixpkgs
 ```
 
-... replacing `16.09` with whatever stable release version you wish to use.
+... replacing `18.09` with whatever stable release version you wish to use.
 
 However, you should be very careful about using a stable release on OS X because
 the public binary cache only caches OS X build products for the unstable

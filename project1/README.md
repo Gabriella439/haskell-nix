@@ -71,13 +71,13 @@ You can find the latest curated package set here:
 
 ... which corresponds roughly to the `nixpkgs-unstable` release.  If you would
 like to see what package versions Nix selects for a stable release such as
-`nixos-16.09`, then change the branch name in the URL from `master` to
-`release-16.09`, like this:
+`nixos-18.09`, then change the branch name in the URL from `master` to
+`release-18.09`, like this:
 
-* [Curated Hackage package set for NixOS-16.09][hackage-packages-16.09]
+* [Curated Hackage package set for NixOS-18.09][hackage-packages-18.09]
 
 These curated package sets correspond roughly to Stackage resolvers.  Stable
-releases like `nixos-16.09` correspond to Stackage LTS resolvers, and
+releases like `nixos-18.09` correspond to Stackage LTS resolvers, and
 the `nixpkgs-unstable` release corresponds roughly to a Stackage nightly
 resolver.  The main difference is that Nix's package set curation extends beyond
 Haskell packages: `nixpkgs` also curates non-Haskell dependencies, too.
@@ -493,8 +493,7 @@ $ cabal2nix https://github.com/Gabriel439/Haskell-Turtle-Library.git --revision 
 wish to use.  You can omit the revision if you want `cabal2nix` to select the
 revision of the current `master` branch.
 
-`release4.nix` shows an example of depending on `turtle` from Github.  The only
-difference is that we now depend on the `turtle-2.nix` file:
+Result looks like this `turtle-2.nix`:
 
 ```nix
 { mkDerivation, ansi-wl-pprint, async, base, bytestring, clock
@@ -521,6 +520,17 @@ mkDerivation {
   description = "Shell programming, Haskell-style";
   license = stdenv.lib.licenses.bsd3;
 }
+```
+
+`release4.nix` shows an example of depending on `turtle` from Github.  The only
+difference is that we now depend on the `turtle-2.nix` file:
+
+```bash
+diff release3.nix release4.nix
+13c13
+<             haskellPackagesNew.callPackage ./turtle.nix { };
+---
+>             haskellPackagesNew.callPackage ./turtle-2.nix { };
 ```
 
 ... and the difference between `turtle.nix` and `turtle-2.nix` is that the
@@ -710,4 +720,4 @@ This concludes basic dependency management in Nix.  The
 dependencies.
 
 [hackage-packages]: https://raw.githubusercontent.com/NixOS/nixpkgs/master/pkgs/development/haskell-modules/hackage-packages.nix
-[hackage-packages-16.09]: https://raw.githubusercontent.com/NixOS/nixpkgs/release-16.09/pkgs/development/haskell-modules/hackage-packages.nix
+[hackage-packages-18.09]: https://raw.githubusercontent.com/NixOS/nixpkgs/release-18.09/pkgs/development/haskell-modules/hackage-packages.nix
