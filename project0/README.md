@@ -114,6 +114,20 @@ These wasteful rebuilds are one reason that I don't recommend using
 `nix-build` to build the root Haskell project.  Instead, the next section
 describes how to use `cabal` with Nix to avoid the issue of wasteful rebuilds.
 
+# Creating your own project
+
+If you ever need to bootstrap your own project using `cabal init`, then run:
+
+```bash
+$ nix-shell --packages ghc --run 'cabal init'
+```
+
+`cabal init` requires `ghc` to be on the executable search path, but we do not
+plan to install GHC globally.  Instead, we can use a `nix-shell` to transiently
+provide `ghc` just for the duration of a `cabal init` command.  Later on we
+rely on the project's Nix configuration to provide the desired GHC for
+project development.
+
 # Building with `cabal`
 
 You can open up a development environment for this project inside of a "Nix
