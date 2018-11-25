@@ -12,4 +12,4 @@ let
   pkgs = import src { };
 
 in
-  pkgs.haskellPackages.callPackage ./default.nix { }
+  pkgs.haskellPackages.callPackage ./project0.nix { }
