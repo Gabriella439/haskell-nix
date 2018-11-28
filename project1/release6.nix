@@ -13,7 +13,7 @@ let
                   haskellPackagesNew.semigroups;
 
               project1 =
-                haskellPackagesNew.callPackage ./default.nix { };
+                haskellPackagesNew.callPackage ./project1.nix { };
 
               turtle =
                 haskellPackagesNew.callPackage ./turtle-2.nix { };
