@@ -69,12 +69,12 @@ Like before, we transform the `project2.cabal` file into a Nix expression by
 running `cabal2nix`:
 
 ```bash
-$ cabal2nix . > default.nix
+$ cabal2nix . > project2.nix
 ```
 
 `cabal2nix` is smart and notices that our `project2.cabal` file has an
 `extra-libraries` section and adds `tar` as a dependency of our package in
-`default.nix`:
+`project2.nix`:
 
 ```nix
 { mkDerivation, base, stdenv, tar }:
@@ -105,7 +105,7 @@ let
       haskellPackages = pkgs.haskellPackages.override {
         overrides = haskellPackagesNew: haskellPackagesOld: rec {
           project2 =
-            haskellPackagesNew.callPackage ./default.nix {
+            haskellPackagesNew.callPackage ./project2.nix {
               tar = pkgs.libtar;
             };
         };
