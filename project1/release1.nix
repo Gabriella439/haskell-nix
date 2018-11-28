@@ -5,7 +5,7 @@ let
       haskellPackages = pkgs.haskellPackages.override {
         overrides = haskellPackagesNew: haskellPackagesOld: rec {
           project1 =
-            haskellPackagesNew.callPackage ./default.nix { };
+            haskellPackagesNew.callPackage ./project1.nix { };
 
           turtle =
             haskellPackagesNew.callPackage ./turtle.nix { };

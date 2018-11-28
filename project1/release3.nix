@@ -7,7 +7,7 @@ let
             haskellPackagesNew.callPackage ./optparse-applicative-2.nix { };
 
           project1 =
-            haskellPackagesNew.callPackage ./default.nix { };
+            haskellPackagesNew.callPackage ./project1.nix { };
 
           turtle =
             haskellPackagesNew.callPackage ./turtle.nix { };

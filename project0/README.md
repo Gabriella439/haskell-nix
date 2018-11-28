@@ -214,7 +214,7 @@ let
   pkgs = import <nixpkgs> { };
 
 in
-  pkgs.haskellPackages.callPackage ./default.nix { }
+  pkgs.haskellPackages.callPackage ./project0.nix { }
 ```
 
 I don't recommend reusing the above derivation for your Haskell projects.  There
@@ -293,7 +293,7 @@ let
   pkgs = import src { };
 
 in
-  pkgs.haskellPackages.callPackage ./default.nix { }
+  pkgs.haskellPackages.callPackage ./project0.nix { }
 ```
 
 ... where `nixpkgs.json` was generated using the `nix-prefetch-git` tool:
@@ -336,17 +336,17 @@ let
   pkgs = import <nixpkgs> { };
 
 in
-  pkgs.haskellPackages.callPackage ./default.nix { }
+  pkgs.haskellPackages.callPackage ./project0.nix { }
 ```
 
-This references another file in this same project called `default.nix`.  This
+This references another file in this same project called `project0.nix`.  This
 file was generated using `cabal2nix` by running:
 
 ```bash
-$ cabal2nix . > default.nix
+$ cabal2nix . > project0.nix
 ```
 
-... and the generated `default.nix` file for this project is:
+... and the generated `project0.nix` file for this project is:
 
 ```nix
 { mkDerivation, base, stdenv }:
@@ -363,7 +363,7 @@ mkDerivation {
 
 All that `cabal2nix` does is translate our `project0.cabal` file into a
 corresponding Nix expression.  For comparison, here is the original
-`project0.cabal` file that `default.nix` was generated from:
+`project0.cabal` file that `project0.nix` was generated from:
 
 ```cabal
 name: project0
@@ -380,7 +380,7 @@ executable project0
 ```
 
 Any time you update a Haskell project's `cabal` file you need to regenerate the
-`default.nix` file using `cabal2nix`.
+`project0.nix` file using `cabal2nix`.
 
 # Hydra compatibility
 
@@ -392,7 +392,7 @@ let
   pkgs = import <nixpkgs> { };
 
 in
-  { project0 = pkgs.haskellPackages.callPackage ./default.nix { };
+  { project0 = pkgs.haskellPackages.callPackage ./project0.nix { };
   }
 ```
 

@@ -5,7 +5,7 @@ let
         overrides = haskellPackagesNew: haskellPackgesOld: rec {
           project3 =
             pkgs.haskell.lib.overrideCabal
-              ( haskellPackagesNew.callPackage ./default.nix {
+              ( haskellPackagesNew.callPackage ./project3.nix {
                   tar = pkgs.libtar;
                 }
               )

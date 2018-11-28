@@ -15,7 +15,7 @@ let
         overrides = haskellPackagesNew: haskellPackgesOld: rec {
           project3 =
             pkgs.haskell.lib.overrideCabal
-              ( haskellPackagesNew.callPackage ./default.nix {
+              ( haskellPackagesNew.callPackage ./project3.nix {
                   tar = pkgs.libtar;
                 }
               )
@@ -28,7 +28,7 @@ let
           project3-minimal =
             pkgs.haskell.lib.overrideCabal
               ( pkgs.haskell.lib.justStaticExecutables
-                  ( haskellPackagesNew.callPackage ./default.nix {
+                  ( haskellPackagesNew.callPackage ./project3.nix {
                       tar = pkgs.libtar;
                     }
                   )
