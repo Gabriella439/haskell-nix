@@ -445,6 +445,19 @@ creating the following `shell.nix` file:
 (import ./release2.nix).project0.env
 ```
 
+...and define extra dependencies just for the shell environment like
+for instance [ghcid](https://github.com/ndmitchell/ghcid).
+
+```nix
+# shell.nix
+{ pkgs ? import <nixpkgs> { } }:
+let extra = with pkgs;
+  mkShell {
+    buildInputs = [ haskellPackages.ghcid ];
+  };
+in (import ./release2.nix).project0.env // extra
+```
+
 ... replacing `release2.nix` with the name of your project's derivation file.
 Then you can just type:
 
