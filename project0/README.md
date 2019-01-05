@@ -451,10 +451,11 @@ for instance [ghcid](https://github.com/ndmitchell/ghcid).
 ```nix
 # shell.nix
 { pkgs ? import <nixpkgs> { } }:
-let extra = with pkgs;
-  mkShell {
-    buildInputs = [ haskellPackages.ghcid ];
-  };
+let
+  extra = with pkgs;
+    mkShell {
+      buildInputs = [ haskellPackages.ghcid ];
+    };
 in (import ./release2.nix).project0.env // extra
 ```
 
