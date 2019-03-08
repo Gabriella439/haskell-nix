@@ -215,7 +215,7 @@ You can find the full list of `pkgs.haskell.lib` utiliites in this file:
 
 Some really convenient utilities include:
 
-* `pkgs.haskell.lib.dontCheck` - Disable tests
+* `pkgs.haskell.lib.dontCheck` - Disable tests (applies derivation option `doCheck = false;`)
 * `pkgs.haskell.lib.appendPatch` - Patch a Haskell package
 * `pkgs.haskell.lib.overrideCabal` - General tool for post-processing the output
   of `cabal2nix`
