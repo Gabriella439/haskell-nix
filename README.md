@@ -95,6 +95,12 @@ names like `NixOS-18.09` (analogous to `stack`'s LTS releases) and then an
 unstable channel named `nixpkgs-unstable` (analogous to `stack`'s nightly
 releases)
 
+# Related guides
+
+* [Nix Haskell Monorepo Tutorial](https://github.com/fghibellini/nix-haskell-monorepo) -
+  Guide on how to scale Nix development to a larger repository containing all of
+  a company's internally-developed Haskell packages
+
 # Related tools
 
 Before continuing, I'd like to mention some other tools for mixing Haskell with
