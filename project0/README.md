@@ -103,7 +103,7 @@ We can verify this by removing the symlink and then performing the build again:
 
 ```bash
 $ rm result -rf
-$ nix-build release
+$ nix-build release0.nix
 $ readlink result
 /nix/store/x28vx2rfnffl1clmxn5054bxwqyln2j0-project0-1.0.0
 ```
