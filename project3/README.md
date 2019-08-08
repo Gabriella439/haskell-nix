@@ -209,7 +209,7 @@ in
   }
 ```
 
-You can find the full list of `pkgs.haskell.lib` utiliites in this file:
+You can find the full list of `pkgs.haskell.lib` utilities in this file:
 
 * [Utilities for tweaking Haskell packages][haskell-lib]
 
