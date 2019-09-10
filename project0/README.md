@@ -163,6 +163,26 @@ Running project0...
 Hello, world!
 ```
 
+You might get the following warning if you are using `cabal-install` version
+`2.*`:
+
+```
+Warning: The configure command is a part of the legacy v1 style of cabal
+usage.
+
+Please switch to using either the new project style and the new-configure
+command or the legacy v1-configure alias as new-style projects will become the
+default in the next version of cabal-install. Please file a bug if you cannot
+replicate a working v1- use case with the new-style commands.
+
+For more information, see: https://wiki.haskell.org/Cabal/NewBuild
+```
+
+If you get that warning, use the corresponding `cabal v1-*` command (e.g.
+`cabal v1-build`) in the interim and see 
+this issue](https://github.com/haskell/cabal/issues/4646) for details about
+Cabal's "new-build" support for Nix.
+
 Unlike Nix, `cabal` will be smart and won't wastefully rebuild things that
 haven't changed.  This means we can safely re-run `cabal` without rebuilding the
 entire project from scratch:
