@@ -180,7 +180,7 @@ For more information, see: https://wiki.haskell.org/Cabal/NewBuild
 
 If you get that warning, use the corresponding `cabal v1-*` command (e.g.
 `cabal v1-build`) in the interim and see 
-this issue](https://github.com/haskell/cabal/issues/4646) for details about
+[this issue](https://github.com/haskell/cabal/issues/4646) for details about
 Cabal's "new-build" support for Nix.
 
 Unlike Nix, `cabal` will be smart and won't wastefully rebuild things that
