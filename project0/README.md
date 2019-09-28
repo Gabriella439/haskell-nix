@@ -3,7 +3,9 @@
  <meta charset="UTF-8">
 
 This directory contains the simplest possible Haskell project and the simplest
-possible Nix derivation to build that project.
+possible Nix derivation to build that project. You can think of a derivation
+as a language-agnostic recipe for how to build something (such as a Haskell
+package).
 
 You can build this Haskell package by running:
 
