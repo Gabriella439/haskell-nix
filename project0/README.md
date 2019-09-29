@@ -119,7 +119,8 @@ describes how to use `cabal` with Nix to avoid the issue of wasteful rebuilds.
 
 # Creating your own project
 
-If you ever need to bootstrap your own project using `cabal init`, then run:
+If you ever need [to bootstrap your own project using `cabal init`](https://www.haskell.org/cabal/users-guide/developing-packages.html#quickstart),
+then run:
 
 ```bash
 $ nix-shell --packages ghc --run 'cabal init'
