@@ -3,7 +3,9 @@
  <meta charset="UTF-8">
 
 This directory contains the simplest possible Haskell project and the simplest
-possible Nix derivation to build that project.
+possible Nix derivation to build that project. You can think of a derivation
+as a language-agnostic recipe for how to build something (such as a Haskell
+package).
 
 You can build this Haskell package by running:
 
@@ -32,11 +34,12 @@ expect the hashed paths in the above example output to necessarily match the
 ones you get (See below for more details about why they might differ).
 
 The `project0.cabal` file only specifies a single dependency of `base < 5` and
-Nix picks `base-4.9.0.0` to satisfy that dependency.  Nix then builds the
-project, stores the build output in
-`/nix/store/x28vx2rfnffl1clmxn5054bxwqyln2j0-project0-1.0.0` and creates a
-symlink in the current directory named `result` pointing to that directory in
-the `/nix/store`:
+Nix picks the latest [`base` package](http://hackage.haskell.org/package/base)
+below version 5 (in this case, [`base-4.9.0.0`](http://hackage.haskell.org/package/base))
+to satisfy that dependency.  Nix then builds the project, stores the build
+output in `/nix/store/x28vx2rfnffl1clmxn5054bxwqyln2j0-project0-1.0.0` and
+creates a symlink in the current directory named `result` pointing to that
+directory in the `/nix/store`:
 
 ```bash
 $ readlink result
@@ -116,7 +119,8 @@ describes how to use `cabal` with Nix to avoid the issue of wasteful rebuilds.
 
 # Creating your own project
 
-If you ever need to bootstrap your own project using `cabal init`, then run:
+If you ever need [to bootstrap your own project using `cabal init`](https://www.haskell.org/cabal/users-guide/developing-packages.html#quickstart),
+then run:
 
 ```bash
 $ nix-shell --packages ghc --run 'cabal init'
@@ -180,7 +184,7 @@ For more information, see: https://wiki.haskell.org/Cabal/NewBuild
 
 If you get that warning, use the corresponding `cabal v1-*` command (e.g.
 `cabal v1-build`) in the interim and see 
-this issue](https://github.com/haskell/cabal/issues/4646) for details about
+[this issue](https://github.com/haskell/cabal/issues/4646) for details about
 Cabal's "new-build" support for Nix.
 
 Unlike Nix, `cabal` will be smart and won't wastefully rebuild things that
