@@ -159,7 +159,7 @@ order to follow the tutorial:
 * [Project 4 - Advanced dependency management][proj4]
 
 [awake]: https://awakesecurity.com/
-[nixpkgs-haskell]: https://nixos.org/nixpkgs/manual/#users-guide-to-the-haskell-infrastructure
+[nixpkgs-haskell]: https://nixos.org/nixpkgs/manual/#haskell
 [proj0]: ./project0/README.md
 [proj1]: ./project1/README.md
 [proj2]: ./project2/README.md
