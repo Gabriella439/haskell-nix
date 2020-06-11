@@ -3,10 +3,7 @@ let
     packageOverrides = pkgs: rec {
       haskellPackages = pkgs.haskellPackages.override {
         overrides = haskellPackagesNew: haskellPackagesOld: rec {
-          project3 =
-            haskellPackagesNew.callPackage ./project3.nix {
-              tar = pkgs.libtar;
-            };
+          morte = pkgs.haskell.lib.dontHaddock haskellPackagesOld.morte;
         };
       };
     };
@@ -15,5 +12,5 @@ let
   pkgs = import <nixpkgs> { inherit config; };
 
 in
-  { project3 = pkgs.haskellPackages.project3;
+  { morte = pkgs.haskellPackages.morte;
   }
