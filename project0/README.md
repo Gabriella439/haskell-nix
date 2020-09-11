@@ -119,7 +119,7 @@ describes how to use `cabal` with Nix to avoid the issue of wasteful rebuilds.
 
 # Creating your own project
 
-If you ever need [to bootstrap your own project using `cabal init`](https://www.haskell.org/cabal/users-guide/developing-packages.html#quickstart),
+If you ever need [to bootstrap your own project using `cabal init`](https://cabal.readthedocs.io/en/latest/developing-packages.html#quickstart),
 then run:
 
 ```bash
