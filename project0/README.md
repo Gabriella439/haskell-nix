@@ -483,6 +483,32 @@ file suitable for the current project.  However, this does not play nice with
 advanced dependency management (covered in the next section) so I do not
 recommend this approach in general.
 
+# Local hoogle
+
+You can also use this expression to configure a local hoogle service with
+additional development tools by using the following `shell.nix` file:
+
+```nix
+{ pkgs ? import <nixpkgs> { } }:
+pkgs.haskellPackages.shellFor {
+  withHoogle = true;
+  packages = p: [ (import ./release2.nix).project0 ];
+  buildInputs = [ pkgs.haskellPackages.hlint ];
+}
+```
+
+
+... replacing `release2.nix` with the name of your project's derivation file.
+Then you can just type:
+
+```bash
+$ nix-shell --command "hoogle server -p 8080 --local --haskell"
+```
+
+... and that will automatically serve a local hoogle with the documentation
+of your project's dependencies.
+
+
 # Conclusion
 
 That concludes Nix workflow basics for Haskell development.  The
