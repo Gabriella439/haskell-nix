@@ -7,7 +7,7 @@ The purpose of this project is to support two Haskell workflows:
 
 * Workflow #1: Nix provisions the development environment
     * Nix provides all dependencies and the Haskell toolchain
-    * You still build the root project using `cabal` ([overview](https://www.haskell.org/cabal/), [user's guide](https://www.haskell.org/cabal/users-guide/index.html))
+    * You still build the root project using `cabal` ([overview](https://www.haskell.org/cabal/), [user's guide](https://cabal.readthedocs.io/))
     * This approach is ideal for development as it supports incremental builds
 * Workflow #2: Nix builds the root project for you
     * This approach is ideal for continuous integration (especially Hydra)
