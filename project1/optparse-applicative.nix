@@ -1,15 +1,15 @@
-{ mkDerivation, ansi-wl-pprint, base, process, QuickCheck, stdenv
+{ mkDerivation, ansi-wl-pprint, base, lib, process, QuickCheck
 , transformers, transformers-compat
 }:
 mkDerivation {
   pname = "optparse-applicative";
   version = "0.13.0.0";
-  sha256 = "1b0c5fdq8bd070g24vrjrwlq979r8dk8mys6aji9hy1l9pcv3inf";
+  sha256 = "cec6b1d94d347898a25446fb8a6643399d8429cf326f221e38a02d849b2b0cac";
   libraryHaskellDepends = [
     ansi-wl-pprint base process transformers transformers-compat
   ];
   testHaskellDepends = [ base QuickCheck ];
   homepage = "https://github.com/pcapriotti/optparse-applicative";
   description = "Utilities and combinators for parsing command line options";
-  license = stdenv.lib.licenses.bsd3;
+  license = lib.licenses.bsd3;
 }
