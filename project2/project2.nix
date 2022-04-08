@@ -1,4 +1,4 @@
-{ mkDerivation, base, stdenv, tar }:
+{ mkDerivation, base, lib, tar }:
 mkDerivation {
   pname = "project2";
   version = "1.0.0";
@@ -7,5 +7,5 @@ mkDerivation {
   isExecutable = true;
   executableHaskellDepends = [ base ];
   executableSystemDepends = [ tar ];
-  license = stdenv.lib.licenses.bsd3;
+  license = lib.licenses.bsd3;
 }

@@ -373,7 +373,7 @@ $ cabal2nix . > project0.nix
 ... and the generated `project0.nix` file for this project is:
 
 ```nix
-{ mkDerivation, base, stdenv }:
+{ mkDerivation, base, lib }:
 mkDerivation {
   pname = "project0";
   version = "1.0.0";
@@ -381,7 +381,7 @@ mkDerivation {
   isLibrary = false;
   isExecutable = true;
   executableHaskellDepends = [ base ];
-  license = stdenv.lib.licenses.bsd3;
+  license = lib.licenses.bsd3;
 }
 ```
 

@@ -1,4 +1,4 @@
-{ mkDerivation, ansi-wl-pprint, base, process, QuickCheck, stdenv
+{ mkDerivation, ansi-wl-pprint, base, process, QuickCheck, lib
 , transformers, transformers-compat
 }:
 mkDerivation {
@@ -11,5 +11,5 @@ mkDerivation {
   testHaskellDepends = [ base QuickCheck ];
   homepage = "https://github.com/pcapriotti/optparse-applicative";
   description = "Utilities and combinators for parsing command line options";
-  license = stdenv.lib.licenses.bsd3;
+  license = lib.licenses.bsd3;
 }

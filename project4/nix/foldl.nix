@@ -1,6 +1,6 @@
 { mkDerivation, base, bytestring, comonad, containers
 , contravariant, criterion, hashable, mwc-random, primitive
-, profunctors, stdenv, text, transformers, unordered-containers
+, profunctors, lib, text, transformers, unordered-containers
 , vector, vector-builder
 }:
 mkDerivation {
@@ -14,5 +14,5 @@ mkDerivation {
   ];
   benchmarkHaskellDepends = [ base criterion ];
   description = "Composable, streaming, and efficient left folds";
-  license = stdenv.lib.licenses.bsd3;
+  license = lib.licenses.bsd3;
 }

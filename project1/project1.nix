@@ -1,4 +1,4 @@
-{ mkDerivation, base, stdenv, turtle }:
+{ mkDerivation, base, lib, turtle }:
 mkDerivation {
   pname = "project1";
   version = "1.0.0";
@@ -6,5 +6,5 @@ mkDerivation {
   isLibrary = false;
   isExecutable = true;
   executableHaskellDepends = [ base turtle ];
-  license = stdenv.lib.licenses.bsd3;
+  license = lib.licenses.bsd3;
 }

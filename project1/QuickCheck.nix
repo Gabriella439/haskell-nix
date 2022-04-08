@@ -1,4 +1,4 @@
-{ mkDerivation, base, containers, random, stdenv, template-haskell
+{ mkDerivation, base, containers, random, lib, template-haskell
 , test-framework, tf-random, transformers
 }:
 mkDerivation {
@@ -13,5 +13,5 @@ mkDerivation {
   ];
   homepage = "https://github.com/nick8325/quickcheck";
   description = "Automatic testing of Haskell programs";
-  license = stdenv.lib.licenses.bsd3;
+  license = lib.licenses.bsd3;
 }

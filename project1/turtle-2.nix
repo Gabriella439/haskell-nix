@@ -1,6 +1,6 @@
 { mkDerivation, ansi-wl-pprint, async, base, bytestring, clock
 , directory, doctest, fetchgit, foldl, hostname, managed
-, optional-args, optparse-applicative, process, stdenv, stm
+, optional-args, optparse-applicative, process, lib, stm
 , system-fileio, system-filepath, temporary, text, time
 , transformers, unix, unix-compat
 }:
@@ -20,5 +20,5 @@ mkDerivation {
   ];
   testHaskellDepends = [ base doctest ];
   description = "Shell programming, Haskell-style";
-  license = stdenv.lib.licenses.bsd3;
+  license = lib.licenses.bsd3;
 }
