@@ -119,7 +119,7 @@ Nix:
 Before you begin, you must install Nix if you haven't already:
 
 ```bash
-$ curl https://nixos.org/nix/install | sh
+$ curl -L https://nixos.org/nix/install | sh
 ```
 
 You must also install `cabal2nix` and `nix-prefetch-git`:
